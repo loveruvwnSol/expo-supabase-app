@@ -30,6 +30,10 @@ export default function LogIn({ path }: { path: string }) {
     setLoading(false);
   }
 
+  async function signOut() {
+    const { error } = await supabase.auth.signOut();
+  }
+
   return (
     <View>
       <View style={[styles.verticallySpaced, styles.mt20]}>

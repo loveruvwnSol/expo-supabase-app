@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../libs/supabaseClient";
 import { StyleSheet, View, Alert } from "react-native";
-import { Button, Input } from "native-base";
+import { Box, Button, Input, Text } from "native-base";
 import { Session } from "@supabase/supabase-js";
 
 export default function Account({ session }: { session: Session }) {
@@ -10,37 +10,37 @@ export default function Account({ session }: { session: Session }) {
   const [website, setWebsite] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
 
-  useEffect(() => {
-    if (session) getProfile();
-  }, [session]);
+  //   useEffect(() => {
+  //     if (session) getProfile();
+  //   }, [session]);
 
-  async function getProfile() {
-    try {
-      setLoading(true);
-      if (!session?.user) throw new Error("No user on the session!");
+  //   async function getProfile() {
+  //     try {
+  //       setLoading(true);
+  //       if (!session?.user) throw new Error("No user on the session!");
 
-      let { data, error, status } = await supabase
-        .from("profiles")
-        .select(`username, website, avatar_url`)
-        .eq("id", session?.user.id)
-        .single();
-      if (error && status !== 406) {
-        throw error;
-      }
+  //       let { data, error, status } = await supabase
+  //         .from("profiles")
+  //         .select(`username, website, avatar_url`)
+  //         .eq("id", session?.user.id)
+  //         .single();
+  //       if (error && status !== 406) {
+  //         throw error;
+  //       }
 
-      if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        Alert.alert(error.message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }
+  //       if (data) {
+  //         setUsername(data.username);
+  //         setWebsite(data.website);
+  //         setAvatarUrl(data.avatar_url);
+  //       }
+  //     } catch (error) {
+  //       if (error instanceof Error) {
+  //         Alert.alert(error.message);
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
 
   async function updateProfile({
     username,
@@ -78,8 +78,8 @@ export default function Account({ session }: { session: Session }) {
   }
 
   return (
-    <View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+    <Box h="full" justifyContent="center" alignItems="center">
+      {/* <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input value={session?.user?.email} />
       </View>
       <View style={styles.verticallySpaced}>
@@ -102,12 +102,14 @@ export default function Account({ session }: { session: Session }) {
           }
           disabled={loading}
         />
-      </View>
+      </View> */}
+
+      <Text>hello world</Text>
 
       <View style={styles.verticallySpaced}>
-        <Button onPress={() => supabase.auth.signOut()} />
+        <Button onPress={() => supabase.auth.signOut()}>sign out</Button>
       </View>
-    </View>
+    </Box>
   );
 }
 

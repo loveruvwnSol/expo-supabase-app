@@ -17,28 +17,12 @@ export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
-  const [session, setSession] = useState<Session | null>(null);
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
-
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <NativeBaseProvider>
         <SafeAreaProvider>
-          <View>
-            {session && session.user ? (
-              <Account key={session.user.id} session={session} />
-            ) : (
-              <LogIn />
-            )}
-          </View>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />
         </SafeAreaProvider>
