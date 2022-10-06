@@ -6,13 +6,6 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 
-import { useEffect, useState } from "react";
-import { supabase } from "./libs/supabaseClient";
-import { Session } from "@supabase/supabase-js";
-import Account from "./components/Account";
-import { View } from "react-native";
-import LogIn from "./components/LogIn";
-
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();

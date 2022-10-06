@@ -1,8 +1,7 @@
 import { StyleSheet } from "react-native";
 import Account from "../components/Account";
-import LogIn from "../components/LogIn";
+import LogIn from "../components/templates/LogIn";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 
@@ -11,9 +10,7 @@ import { supabase } from "../libs/supabaseClient";
 import { Session } from "@supabase/supabase-js";
 import { Box } from "native-base";
 
-export default function TabOneScreen({
-  navigation,
-}: RootTabScreenProps<"TabOne">) {
+export default function TabOneScreen() {
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
@@ -23,11 +20,11 @@ export default function TabOneScreen({
     });
   }, []);
   return (
-    <Box h="full" bg="#E3EDF7">
+    <Box h="full" background="white">
       {session && session.user ? (
         <Account key={session.user.id} session={session} />
       ) : (
-        <LogIn path={""} />
+        <Box></Box>
       )}
     </Box>
   );
