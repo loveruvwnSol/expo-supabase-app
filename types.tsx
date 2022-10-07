@@ -28,6 +28,11 @@ export type LogInParamList = {
   AddAccount: undefined;
 };
 
+export type UserSettingsParamList = {
+  UserInfo: undefined;
+  UserSetting: undefined;
+};
+
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
