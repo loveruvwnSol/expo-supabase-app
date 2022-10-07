@@ -1,33 +1,16 @@
 import React, { useState } from "react";
-import { Alert } from "react-native";
-import { supabase } from "../../libs/supabaseClient";
-import { Box, Button, Input, Text, Pressable, Icon, Link } from "native-base";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Box, Input, Text, Pressable, Icon, Link } from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LogInParamList } from "../../types";
+import { AddAccountBtn } from "../organisms/AddAccountBtn";
 
 type LogInStackscreenProps = NativeStackScreenProps<LogInParamList>;
 
 export default function AddAccount({ navigation }: LogInStackscreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [show, setShow] = React.useState(false);
-
-  async function signUpWithEmail() {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-  }
-
-  // async function signOut() {
-  //   const { error } = await supabase.auth.signOut();
-  // }
 
   return (
     <Box h="full" alignItems="center" justifyContent="center">
@@ -69,16 +52,7 @@ export default function AddAccount({ navigation }: LogInStackscreenProps) {
           placeholder="パスワード"
         />
       </Box>
-      <Box mb={5}>
-        <Button
-          w={"48"}
-          borderRadius={0}
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
-        >
-          アカウント作成
-        </Button>
-      </Box>
+      <AddAccountBtn Email={email} Password={password} />
       <Box>
         <Link
           isExternal
