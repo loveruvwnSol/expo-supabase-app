@@ -24,8 +24,6 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
   }, []);
 
   function sendData() {
-    console.log("id*", session?.user?.id);
-
     supabase
       .from("profiles")
       .insert([
@@ -36,9 +34,7 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
           user_id: userid,
         },
       ])
-      .then(({ data, error }) => {
-        console.log({ data, error });
-      });
+      .then(({ data, error }) => {});
     navigation.navigate("Root");
   }
   return (

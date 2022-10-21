@@ -30,8 +30,6 @@ export const LogInBtn: React.FC<LogInBtnProps> = ({
       .select("*")
       .eq("id", supabase.auth.user()?.id);
 
-    console.log(profiles?.length);
-
     if (profiles?.length === 0) {
       alert("ユーザーネームの設定を行ってください");
       navigation.navigate("NameSetting");
