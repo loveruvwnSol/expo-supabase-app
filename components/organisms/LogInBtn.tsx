@@ -6,9 +6,14 @@ import { Box, Button } from "native-base";
 type LogInBtnProps = {
   Email: any;
   Password: any;
+  navigation: any;
 };
 
-export const LogInBtn: React.FC<LogInBtnProps> = ({ Email, Password }) => {
+export const LogInBtn: React.FC<LogInBtnProps> = ({
+  Email,
+  Password,
+  navigation,
+}) => {
   const [loading, setLoading] = useState(false);
   async function signInWithEmail() {
     setLoading(true);
@@ -19,6 +24,20 @@ export const LogInBtn: React.FC<LogInBtnProps> = ({ Email, Password }) => {
 
     if (error) Alert.alert(error.message);
     setLoading(false);
+
+    let { data: profiles } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", supabase.auth.user()?.id);
+
+    console.log(profiles?.length);
+
+    if (profiles?.length === 0) {
+      alert("ユーザーネームの設定を行ってください");
+      navigation.navigate("NameSetting");
+    } else if (profiles?.length === 1) {
+      navigation.navigate("Root");
+    }
   }
   return (
     <Box>

@@ -52,24 +52,24 @@ function RootNavigator() {
       setSession(session);
     });
   }, []);
+
   return (
     <Stack.Navigator>
       <Stack.Group screenOptions={{ presentation: "transparentModal" }}>
-        {session && session.user ? (
+        <Stack.Group>
+          <Stack.Screen
+            name="LogInNavi"
+            component={LogInNavigator}
+            options={{ headerShown: false }}
+          />
+        </Stack.Group>
+        <Stack.Group>
           <Stack.Screen
             name="Root"
             component={BottomTabNavigator}
             options={{ headerShown: false }}
           />
-        ) : (
-          <Stack.Group>
-            <Stack.Screen
-              name="Test"
-              component={LogInNavigator}
-              options={{ headerShown: false }}
-            />
-          </Stack.Group>
-        )}
+        </Stack.Group>
       </Stack.Group>
       <Stack.Screen
         name="NotFound"

@@ -8,14 +8,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { Pressable } from "react-native";
-import Navigation from ".";
+import Home from "../components/templates/Home";
 import { UserInfo } from "../components/templates/UserInfo";
 import { UserSettings } from "../components/templates/UserSettings";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import TabOneScreen from "../screens/TabOneScreen";
-// import TabTwoScreen from "../screens/TabTwoScreen";
 import {
   RootTabParamList,
   RootTabScreenProps,
@@ -39,7 +37,7 @@ export default function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="TabOne"
-        component={TabOneScreen}
+        component={Home}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
           title: "ホーム",
           tabBarIcon: ({ color }) => (

@@ -52,7 +52,7 @@ export default function LogIn({ navigation }: LogInStackscreenProps) {
           placeholder="パスワード"
         />
       </Box>
-      <LogInBtn Email={email} Password={password} />
+      <LogInBtn Email={email} Password={password} navigation={navigation} />
       <Box>
         <Link
           isExternal

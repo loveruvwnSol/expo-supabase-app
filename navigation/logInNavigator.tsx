@@ -4,6 +4,7 @@ import * as React from "react";
 import { LogInParamList } from "../types";
 import LogIn from "../components/templates/LogIn";
 import AddAccount from "../components/templates/AddAccount";
+import { NameSetting } from "../components/templates/NameSetting";
 
 const LogInStack = createNativeStackNavigator<LogInParamList>();
 
@@ -25,6 +26,11 @@ export function LogInNavigator() {
         <LogInStack.Screen
           name="AddAccount"
           component={AddAccount}
+          options={{ headerShown: false }}
+        />
+        <LogInStack.Screen
+          name="NameSetting"
+          component={NameSetting}
           options={{ headerShown: false }}
         />
       </LogInStack.Group>
