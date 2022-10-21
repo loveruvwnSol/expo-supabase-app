@@ -1,7 +1,7 @@
 export const GenderList = [
-  { label: "男", value: "America" },
-  { label: "女", value: "Australia" },
-  { label: "その他", value: "Brazil" },
+  { label: "男", value: "男" },
+  { label: "女", value: "女" },
+  { label: "その他", value: "その他" },
 ];
 
 export const CountryList = [

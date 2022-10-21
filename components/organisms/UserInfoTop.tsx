@@ -24,7 +24,7 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
         </Box>
         <Box>
           <Text textAlign="center" fontSize={24} fontWeight="bold">
-            user name
+            username
           </Text>
           <Text
             textAlign="left"
