@@ -1,10 +1,36 @@
+import React, { useEffect, useState } from "react";
 import { Box, HStack, Text, Button, Avatar } from "native-base";
+import { supabase } from "../../libs/supabaseClient";
+import { Session } from "@supabase/supabase-js";
+import { Ionicons } from "@expo/vector-icons";
 
 type UserInfoTopProps = {
   navigation: any;
 };
 
 export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   const setupUser = async () => {
+  //     const { data: profile } = await supabase
+  //       .from("profiles")
+  //       .select("*")
+  //       .eq("id", session?.user?.id)
+  //       .order("user_id")
+  //       .single();
+  //     setUser(profile);
+  //   };
+  // });
+
   return (
     <Box mb={10}>
       <HStack alignItems="center">
@@ -18,13 +44,13 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
             // }}
             size="xs"
           >
-            Not set
+            <Ionicons name="person-outline" size={60} color="white" />
             <Avatar.Badge size={8} bg="green.500" />
           </Avatar>
         </Box>
         <Box>
           <Text textAlign="center" fontSize={24} fontWeight="bold">
-            username
+            {/* {user && user} */}
           </Text>
           <Text
             textAlign="left"
@@ -33,7 +59,7 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
             opacity={0.5}
             mb={5}
           >
-            @dfgthyjuikolp
+            {/* {user && user?.user_id} */}
           </Text>
           <Button
             borderRadius={0}

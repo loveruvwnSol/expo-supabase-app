@@ -1,25 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Box, Text, Button, VStack, Avatar, Input } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
+import { Session } from "@supabase/supabase-js";
 
-export const UserSettingsTop = () => {
+type UserSettingsTopProps = {
+  navigation: any;
+};
+
+export const UserSettingsTop: React.FC<UserSettingsTopProps> = ({
+  navigation,
+}) => {
+  const [session, setSession] = useState<Session | null>(null);
   const [username, setUsername] = useState("");
   const [userid, setUserid] = useState("");
-  function sendData() {
-    // supabase
-    //   .from("profiles")
-    //   .insert([
-    //     {
-    //       id: "",
-    //       user_email: "",
-    //       user_name: username,
-    //       user_id: userid,
-    //     },
-    //   ])
-    //   .then(({ data, error }) => {
-    //     console.log({ data, error });
-    //   });
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
+  function updateData() {
+    supabase
+      .from("profiles")
+      .update([
+        {
+          id: session?.user?.id,
+          user_name: username,
+          user_id: userid,
+        },
+      ])
+      .then(({ data, error }) => {
+        alert("変更が適用されました");
+        navigation.navigate("UserInfo")
+      });
   }
 
   return (
@@ -41,9 +57,16 @@ export const UserSettingsTop = () => {
             // }}
             size="xs"
           >
-            Not set
-            <Avatar.Badge background="white" size={8} borderWidth={1}>
-              <Ionicons name="reload-circle-outline" size={28} />
+            <Ionicons name="person-outline" size={60} color="white" />
+            <Avatar.Badge
+              background="white"
+              size={8}
+              borderWidth={1}
+              borderColor="black"
+            >
+              <Box ml={0.99}>
+                <Ionicons name="reload-circle-outline" size={28} />
+              </Box>
             </Avatar.Badge>
           </Avatar>
         </Box>
@@ -70,7 +93,7 @@ export const UserSettingsTop = () => {
             value={userid}
           />
         </Box>
-        <Button onPress={() => sendData()}>設定する</Button>
+        <Button onPress={() => updateData()}>設定する</Button>
       </VStack>
     </Box>
   );
