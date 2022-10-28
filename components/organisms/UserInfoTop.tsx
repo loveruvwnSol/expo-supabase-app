@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, HStack, Text, Button, Avatar } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
-import { Session } from "@supabase/supabase-js";
 import { Ionicons } from "@expo/vector-icons";
 
 type UserInfoTopProps = {
@@ -9,27 +8,23 @@ type UserInfoTopProps = {
 };
 
 export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
-  const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    setSession(supabase.auth.session());
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    const setupUser = async () => {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("user_id, user_name")
+        .eq("id", supabase.auth.user()?.id);
+      if (profile) {
+        setUser(profile[0]);
+        console.log(profile);
+      }
+    };
+    setupUser();
   }, []);
 
-  // useEffect(() => {
-  //   const setupUser = async () => {
-  //     const { data: profile } = await supabase
-  //       .from("profiles")
-  //       .select("*")
-  //       .eq("id", session?.user?.id)
-  //       .order("user_id")
-  //       .single();
-  //     setUser(profile);
-  //   };
-  // });
+  if (!user) return null;
 
   return (
     <Box mb={10}>
@@ -49,17 +44,17 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
           </Avatar>
         </Box>
         <Box>
-          <Text textAlign="center" fontSize={24} fontWeight="thin">
-            {/* {user && user} */}
+          <Text textAlign="left" fontSize={24} fontWeight="thin">
+            {user.user_name}
           </Text>
           <Text
             textAlign="left"
-            fontSize={10}
+            fontSize={12}
             fontWeight="thin"
             opacity={0.5}
             mb={5}
           >
-            {/* {user && user?.user_id} */}
+            {"@" + user.user_id}
           </Text>
           <Button
             borderRadius={0}
