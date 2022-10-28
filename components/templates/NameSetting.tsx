@@ -11,7 +11,7 @@ export const NameSetting = ({ navigation }: LogInStackscreenProps) => {
   const [userid, setUserid] = useState("");
   return (
     <Box h="full" alignItems="center" justifyContent="center">
-      <Text fontSize={24} fontWeight="bold" textAlign="center" mb={5}>
+      <Text fontSize={24} textAlign="center" mb={5} fontWeight="thin">
         名前設定
       </Text>
       <Box mb={5}>
@@ -20,6 +20,7 @@ export const NameSetting = ({ navigation }: LogInStackscreenProps) => {
           variant="underlined"
           onChangeText={(text) => setUsername(text)}
           value={username}
+          fontWeight="thin"
           placeholder="ニックネーム"
         />
       </Box>
@@ -27,6 +28,7 @@ export const NameSetting = ({ navigation }: LogInStackscreenProps) => {
         <Input
           w={72}
           variant="underlined"
+          fontWeight="thin"
           onChangeText={(text) => setUserid(text)}
           value={userid}
           placeholder="ユーザーID"
