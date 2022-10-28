@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Button } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
 import { Session } from "@supabase/supabase-js";
+import { Alert } from "react-native";
 
 type NameSettingBtnProps = {
   username: any;
@@ -15,6 +16,7 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
   navigation,
 }) => {
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -34,8 +36,11 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
           user_id: userid,
         },
       ])
-      .then(({ data, error }) => {});
-    navigation.navigate("Root");
+      .then(({ data, error }) => {
+        if (error) Alert.alert(error.message);
+        setLoading(false);
+        if (!error) navigation.navigate("Root");
+      });
   }
   return (
     <Box>

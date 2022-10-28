@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Box, Text, Button, VStack, Avatar, Input } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
 import { Session } from "@supabase/supabase-js";
+import { Alert } from "react-native";
 
 type UserSettingsTopProps = {
   navigation: any;
@@ -14,6 +15,7 @@ export const UserSettingsTop: React.FC<UserSettingsTopProps> = ({
   const [session, setSession] = useState<Session | null>(null);
   const [username, setUsername] = useState("");
   const [userid, setUserid] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -33,8 +35,9 @@ export const UserSettingsTop: React.FC<UserSettingsTopProps> = ({
         },
       ])
       .then(({ data, error }) => {
-        alert("変更が適用されました");
-        navigation.navigate("UserInfo");
+        if (error) Alert.alert(error.message);
+        setLoading(false);
+        if (!error) navigation.navigate("UserInfo");
       });
   }
 
