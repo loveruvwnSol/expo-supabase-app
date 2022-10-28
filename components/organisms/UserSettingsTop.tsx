@@ -34,7 +34,7 @@ export const UserSettingsTop: React.FC<UserSettingsTopProps> = ({
       ])
       .then(({ data, error }) => {
         alert("変更が適用されました");
-        navigation.navigate("UserInfo")
+        navigation.navigate("UserInfo");
       });
   }
 
@@ -71,22 +71,24 @@ export const UserSettingsTop: React.FC<UserSettingsTopProps> = ({
           </Avatar>
         </Box>
         <Box mb={5}>
-          <Text fontWeight="bold" mb={2}>
+          <Text fontWeight="thin" mb={2}>
             ニックネーム
           </Text>
           <Input
             w={72}
+            fontWeight="thin"
             mb={5}
             variant="outline"
             placeholder="ニックネーム"
             onChangeText={(text) => setUsername(text)}
             value={username}
           />
-          <Text fontWeight="bold" mb={2}>
+          <Text fontWeight="thin" mb={2}>
             ユーザーID
           </Text>
           <Input
             w={72}
+            fontWeight="thin"
             variant="outline"
             placeholder="ユーザーID"
             onChangeText={(text) => setUserid(text)}

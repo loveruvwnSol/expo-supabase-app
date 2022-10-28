@@ -14,7 +14,7 @@ export default function AddAccount({ navigation }: LogInStackscreenProps) {
 
   return (
     <Box h="full" alignItems="center" justifyContent="center">
-      <Text fontSize={24} fontWeight="bold" textAlign="center" mb={5}>
+      <Text fontSize={24} textAlign="center" mb={5} fontWeight="thin">
         アカウント作成
       </Text>
       <Box mb={5}>
@@ -23,6 +23,7 @@ export default function AddAccount({ navigation }: LogInStackscreenProps) {
           variant="underlined"
           onChangeText={(text) => setEmail(text)}
           value={email}
+          fontWeight="thin"
           placeholder="Email"
         />
       </Box>
@@ -30,6 +31,7 @@ export default function AddAccount({ navigation }: LogInStackscreenProps) {
         <Input
           w={72}
           variant="underlined"
+          fontWeight="thin"
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}

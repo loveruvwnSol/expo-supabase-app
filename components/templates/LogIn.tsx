@@ -14,7 +14,7 @@ export default function LogIn({ navigation }: LogInStackscreenProps) {
 
   return (
     <Box h="full" alignItems="center" justifyContent="center">
-      <Text fontSize={24} fontWeight="bold" textAlign="center" mb={5}>
+      <Text fontSize={24} textAlign="center" mb={5} fontWeight="thin">
         ログイン
       </Text>
       <Box mb={5}>
@@ -23,12 +23,14 @@ export default function LogIn({ navigation }: LogInStackscreenProps) {
           variant="underlined"
           onChangeText={(text) => setEmail(text)}
           value={email}
+          fontWeight="thin"
           placeholder="Email"
         />
       </Box>
       <Box mb={5}>
         <Input
           w={72}
+          fontWeight="thin"
           variant="underlined"
           onChangeText={(text) => setPassword(text)}
           value={password}
@@ -55,6 +57,7 @@ export default function LogIn({ navigation }: LogInStackscreenProps) {
       <LogInBtn Email={email} Password={password} navigation={navigation} />
       <Box>
         <Link
+          fontWeight="thin"
           isExternal
           _text={{
             color: "blue.400",

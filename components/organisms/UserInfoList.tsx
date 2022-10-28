@@ -11,15 +11,19 @@ export const UserInfoList = () => {
     <Box background="white" w={"xs"} shadow={0}>
       <Box mt={4} ml={4}>
         <Box mb={5}>
-          <Text fontSize={16} fontWeight="bold">
+          <Text fontSize={16} fontWeight="thin">
             オプション
           </Text>
           <HStack mt={3} justifyContent="space-between" alignItems="center">
-            <Text opacity={0.5}>通知</Text>
+            <Text opacity={0.5} fontWeight="thin">
+              通知
+            </Text>
             <Switch mr={5} size={"md"} />
           </HStack>
           <HStack mt={3} justifyContent="space-between" alignItems="center">
-            <Text opacity={0.5}>テーマ</Text>
+            <Text opacity={0.5} fontWeight="thin">
+              テーマ
+            </Text>
             <Select
               borderWidth={0}
               selectedValue={theme}
@@ -37,7 +41,7 @@ export const UserInfoList = () => {
           </HStack>
         </Box>
         <Box mb={5}>
-          <Text fontSize={16} fontWeight="bold">
+          <Text fontSize={16} fontWeight="thin">
             アカウント
           </Text>
           {InfoSelectList.map((e, idx) => (
@@ -47,7 +51,9 @@ export const UserInfoList = () => {
               justifyContent="space-between"
               alignItems="center"
             >
-              <Text opacity={0.5}>{e.title}</Text>
+              <Text opacity={0.5} fontWeight="thin">
+                {e.title}
+              </Text>
               <Select
                 borderWidth={0}
                 selectedValue={e.state}

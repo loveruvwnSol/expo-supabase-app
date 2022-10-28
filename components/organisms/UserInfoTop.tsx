@@ -49,13 +49,13 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
           </Avatar>
         </Box>
         <Box>
-          <Text textAlign="center" fontSize={24} fontWeight="bold">
+          <Text textAlign="center" fontSize={24} fontWeight="thin">
             {/* {user && user} */}
           </Text>
           <Text
             textAlign="left"
             fontSize={10}
-            fontWeight="bold"
+            fontWeight="thin"
             opacity={0.5}
             mb={5}
           >
