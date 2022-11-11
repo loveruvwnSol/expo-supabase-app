@@ -28,6 +28,7 @@ export type LogInParamList = {
   LogIn: undefined;
   AddAccount: undefined;
   NameSetting: undefined;
+  IconSetting: undefined;
 };
 
 export type UserSettingsParamList = {

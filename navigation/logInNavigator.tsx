@@ -5,6 +5,7 @@ import { LogInParamList } from "../types";
 import LogIn from "../components/templates/LogIn";
 import AddAccount from "../components/templates/AddAccount";
 import { NameSetting } from "../components/templates/NameSetting";
+import { IconSetting } from "../components/templates/IconSetting";
 
 const LogInStack = createNativeStackNavigator<LogInParamList>();
 
@@ -31,6 +32,11 @@ export function LogInNavigator() {
         <LogInStack.Screen
           name="NameSetting"
           component={NameSetting}
+          options={{ headerShown: false }}
+        />
+        <LogInStack.Screen
+          name="IconSetting"
+          component={IconSetting}
           options={{ headerShown: false }}
         />
       </LogInStack.Group>

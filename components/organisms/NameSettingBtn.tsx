@@ -39,13 +39,13 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
       .then(({ data, error }) => {
         if (error) Alert.alert(error.message);
         setLoading(false);
-        if (!error) navigation.navigate("Root");
+        if (!error) navigation.navigate("IconSetting");
       });
   }
   return (
     <Box>
       <Button w={"48"} borderRadius={0} onPress={() => sendData()}>
-        始める
+        次へ
       </Button>
     </Box>
   );
