@@ -22,7 +22,7 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
       }
     };
     setupUser();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const getUserIcon = async () => {
