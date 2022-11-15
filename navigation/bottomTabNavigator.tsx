@@ -45,7 +45,7 @@ export default function BottomTabNavigator() {
       }
     };
     setupUser();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const getUserIcon = async () => {

@@ -18,7 +18,6 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
         .eq("id", supabase.auth.user()?.id);
       if (profile) {
         setUser(profile[0]);
-        console.log(profile);
       }
     };
     setupUser();
