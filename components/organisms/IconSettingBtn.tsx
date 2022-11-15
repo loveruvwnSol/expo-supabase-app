@@ -71,13 +71,7 @@ export const IconSettingBtn: React.FC<IconSettingBtnProps> = ({
   };
   return (
     <Box alignItems="center" justifyContent="center">
-      <Box
-        borderWidth={1}
-        borderRadius={100}
-        borderColor="gray.500"
-        mr={5}
-        mb={5}
-      >
+      <Box borderWidth={1} borderRadius={100} borderColor="gray.500" mb={5}>
         <Avatar w={32} h={32} source={{ uri: iconImage }} size="xs" />
       </Box>
       <Box>
