@@ -67,7 +67,14 @@ export const UserNameSettings: React.FC<UserSettingsTopProps> = ({
           value={userid}
         />
       </Box>
-      <Button onPress={() => updateData()}>設定する</Button>
+      <Button
+        w={"48"}
+        borderRadius={0}
+        disabled={loading}
+        onPress={() => updateData()}
+      >
+        設定する
+      </Button>
     </VStack>
   );
 };
