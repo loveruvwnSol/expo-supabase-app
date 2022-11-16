@@ -16,7 +16,9 @@ import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import BottomTabNavigator from "./bottomTabNavigator";
+import BottomTabNavigator, {
+  UserSettingsNavigator,
+} from "./bottomTabNavigator";
 import { useEffect, useState } from "react";
 import { supabase } from "../libs/supabaseClient";
 import { Session } from "@supabase/supabase-js";
@@ -77,7 +79,11 @@ function RootNavigator() {
         options={{ title: "Oops!" }}
       />
       <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+        <Stack.Screen
+          name="UserSettingsModal"
+          component={UserSettingsNavigator}
+          options={{ headerShown: false }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

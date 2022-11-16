@@ -22,6 +22,7 @@ import {
 } from "../types";
 import { supabase } from "../libs/supabaseClient";
 import { Box, Avatar } from "native-base";
+import ModalScreen from "../screens/ModalScreen";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -79,7 +80,7 @@ export default function BottomTabNavigator() {
           ),
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Modal")}
+              onPress={() => navigation.navigate("UserSettingsModal")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
@@ -98,7 +99,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={UserSettingsNavigator}
+        component={ModalScreen}
         options={{
           title: "ユーザー",
           tabBarIcon: ({ color }) => (
