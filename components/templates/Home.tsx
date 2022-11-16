@@ -14,7 +14,13 @@ export default function Home({ navigation }: LogInStackscreenProps) {
     supabase.auth.signOut();
   };
   return (
-    <Box w="full" h="full" justifyContent="center" textAlign="center">
+    <Box
+      w="full"
+      h="full"
+      justifyContent="center"
+      textAlign="center"
+      background="blueGray.100"
+    >
       <HomeCards />
       <FabAdd />
     </Box>
