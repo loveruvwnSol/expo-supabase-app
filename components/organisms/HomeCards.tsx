@@ -41,9 +41,6 @@ export const HomeCards = () => {
       <HStack justifyContent="space-around">
         <TrainingCard />
         <CaloriesCard />
-        {/* <Box>
-          <Ionicons name="add" />
-        </Box> */}
       </HStack>
     </Box>
   );
