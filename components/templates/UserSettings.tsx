@@ -16,7 +16,7 @@ export const UserSettings = ({ navigation }: UserSettingsStackscreenProps) => {
       alignItems="center"
     >
       <Box mb={20} justifyContent="center" alignItems="center">
-        <UserIconSettings />
+        <UserIconSettings navigation={navigation}/>
         <UserNameSettings navigation={navigation} />
       </Box>
     </Box>
