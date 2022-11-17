@@ -32,8 +32,8 @@ export const IconSettingBtn: React.FC<IconSettingBtnProps> = ({
 
       const fileName = photo.uri.replace(/^.*[\\\/]/, "");
 
-      var fromData = new FormData();
-      fromData.append("files", {
+      var formData = new FormData();
+      formData.append("files", {
         // @ts-ignore-next-line
         uri: photo.uri,
         name: fileName,
@@ -42,7 +42,7 @@ export const IconSettingBtn: React.FC<IconSettingBtnProps> = ({
 
       const { data, error } = await supabase.storage
         .from("avatars")
-        .upload(user.id + "_ICON/avatar", fromData, { upsert: true });
+        .upload(user.id + "_ICON/avatar", formData, { upsert: true });
       console.log(error);
       setIconImage(photo.uri);
       navigation.navigate("Root");
