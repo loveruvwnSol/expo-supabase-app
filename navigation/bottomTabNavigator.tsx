@@ -59,7 +59,7 @@ export default function BottomTabNavigator() {
       }
     };
     getUserIcon();
-  }, [user]);
+  }, [user, usericon]);
 
   if (!user) return null;
 

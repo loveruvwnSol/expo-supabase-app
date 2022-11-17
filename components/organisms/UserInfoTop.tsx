@@ -34,7 +34,7 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
       }
     };
     getUserIcon();
-  }, [user]);
+  }, [user, usericon]);
 
   if (!user) return null;
 
@@ -60,12 +60,11 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
             {"@" + user.user_id}
           </Text>
           <Button
+            w={"32"}
             borderRadius={0}
-            onPress={() => {
-              navigation.navigate("UserSetting");
-            }}
+            onPress={() => navigation.navigate("UserSetting")}
           >
-            <Text color="white">編集</Text>
+            編集
           </Button>
         </Box>
       </HStack>
