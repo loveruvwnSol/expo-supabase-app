@@ -4,11 +4,11 @@ import { supabase } from "../../libs/supabaseClient";
 import { Session } from "@supabase/supabase-js";
 import { Alert } from "react-native";
 
-type UserSettingsTopProps = {
+type UserNameSettingsProps = {
   navigation: any;
 };
 
-export const UserNameSettings: React.FC<UserSettingsTopProps> = ({
+export const UserNameSettings: React.FC<UserNameSettingsProps> = ({
   navigation,
 }) => {
   const [session, setSession] = useState<Session | null>(null);
