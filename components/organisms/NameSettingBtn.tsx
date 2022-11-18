@@ -41,6 +41,21 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
         setLoading(false);
         if (!error) navigation.navigate("IconSetting");
       });
+
+    supabase
+      .from("options")
+      .insert([
+        {
+          id: session?.user?.id,
+          notification: false,
+          theme: "light",
+        },
+      ])
+      .then(({ data, error }) => {
+        if (error) Alert.alert(error.message);
+        setLoading(false);
+        if (!error) navigation.navigate("IconSetting");
+      });
   }
   return (
     <Box>
