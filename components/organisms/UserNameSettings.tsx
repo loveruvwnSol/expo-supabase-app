@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Text, Button, VStack, Input } from "native-base";
+import { Box, Text, Button, VStack, Input, useColorMode } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
 import { Session } from "@supabase/supabase-js";
 import { Alert } from "react-native";
@@ -15,6 +15,7 @@ export const UserNameSettings: React.FC<UserNameSettingsProps> = ({
   const [username, setUsername] = useState("");
   const [userid, setUserid] = useState("");
   const [loading, setLoading] = useState(false);
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -47,6 +48,8 @@ export const UserNameSettings: React.FC<UserNameSettingsProps> = ({
           ニックネーム
         </Text>
         <Input
+          bg={colorMode === "dark" ? "coolGray.700" : "blueGray.100"}
+          placeholderTextColor={colorMode === "dark" ? "white" : "black"}
           w={72}
           fontWeight="thin"
           mb={5}
@@ -59,6 +62,8 @@ export const UserNameSettings: React.FC<UserNameSettingsProps> = ({
           ユーザーID
         </Text>
         <Input
+          bg={colorMode === "dark" ? "coolGray.700" : "blueGray.100"}
+          placeholderTextColor={colorMode === "dark" ? "white" : "black"}
           w={72}
           fontWeight="thin"
           variant="outline"
