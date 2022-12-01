@@ -21,8 +21,10 @@ import {
   UserSettingsParamList,
 } from "../types";
 import { supabase } from "../libs/supabaseClient";
-import { Box, Avatar } from "native-base";
+import { Box, Avatar, useColorMode, useColorModeValue } from "native-base";
 import ModalScreen from "../screens/ModalScreen";
+import { UserDetailSetting } from "../components/templates/UserDetailSetting";
+import { OptionSetting } from "../components/templates/OptionSetting";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -34,6 +36,7 @@ export default function BottomTabNavigator() {
 
   const [user, setUser] = useState<any>(null);
   const [usericon, setUsericon] = useState<string | undefined>();
+  const { colorMode, setColorMode } = useColorMode();
 
   useEffect(() => {
     const setupUser = async () => {
@@ -61,6 +64,19 @@ export default function BottomTabNavigator() {
     getUserIcon();
   }, [user, usericon]);
 
+  useEffect(() => {
+    const getOptions = async () => {
+      const { data: data } = await supabase
+        .from("options")
+        .select("theme")
+        .eq("id", supabase.auth.user()?.id);
+      if (data) {
+        setColorMode(data[0].theme);
+      }
+    };
+    getOptions();
+  }, [colorMode]);
+
   if (!user) return null;
 
   return (
@@ -75,6 +91,10 @@ export default function BottomTabNavigator() {
         component={Home}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
           title: "ホーム",
+          headerTitle: "for today",
+          headerTitleStyle: {
+            fontWeight: "200",
+          },
           tabBarIcon: ({ color }) => (
             <Ionicons name="home-outline" size={24} color={color} />
           ),
@@ -101,9 +121,29 @@ export default function BottomTabNavigator() {
         name="TabTwo"
         component={ModalScreen}
         options={{
-          title: "ユーザー",
+          title: "グラフ",
           tabBarIcon: ({ color }) => (
-            <Ionicons name="person-outline" size={24} color={color} />
+            <Ionicons name="analytics-outline" size={24} color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="TabThree"
+        component={ModalScreen}
+        options={{
+          title: "通知",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="notifications-outline" size={24} color={color} />
+          ),
+        }}
+      />
+       <BottomTab.Screen
+        name="TabFour"
+        component={ModalScreen}
+        options={{
+          title: "設定",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="settings-outline" size={24} color={color} />
           ),
         }}
       />
@@ -114,8 +154,9 @@ export default function BottomTabNavigator() {
 const UserSettingsStack = createNativeStackNavigator<UserSettingsParamList>();
 
 export function UserSettingsNavigator() {
+  const { colorMode, setColorMode } = useColorMode();
   return (
-    <UserSettingsStack.Navigator initialRouteName="UserInfo">
+    <UserSettingsStack.Navigator initialRouteName="UserInfo" screenOptions={{}}>
       <UserSettingsStack.Group
         screenOptions={{
           animation: "simple_push",
@@ -129,6 +170,31 @@ export function UserSettingsNavigator() {
         <UserSettingsStack.Screen
           name="UserSetting"
           component={UserSettings}
+          options={{
+            headerShown: false,
+            headerTitle: "",
+            headerShadowVisible: false,
+            headerBackButtonMenuEnabled: false,
+            headerStyle: {
+              backgroundColor: useColorModeValue(
+                "coolGray.800",
+                "blueGray.100"
+              ),
+            },
+          }}
+        />
+        <UserSettingsStack.Screen
+          name="UserDetailSetting"
+          component={UserDetailSetting}
+          options={{
+            headerTitle: "",
+            headerShadowVisible: false,
+            headerBackButtonMenuEnabled: false,
+          }}
+        />
+        <UserSettingsStack.Screen
+          name="OptionSetting"
+          component={OptionSetting}
           options={{
             headerTitle: "",
             headerShadowVisible: false,

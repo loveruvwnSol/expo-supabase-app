@@ -34,6 +34,8 @@ export type LogInParamList = {
 export type UserSettingsParamList = {
   UserInfo: undefined;
   UserSetting: undefined;
+  UserDetailSetting: undefined;
+  OptionSetting: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -42,6 +44,8 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 export type RootTabParamList = {
   TabOne: undefined;
   TabTwo: undefined;
+  TabThree: undefined;
+  TabFour: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
