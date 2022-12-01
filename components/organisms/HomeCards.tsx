@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from "native-base";
+import { Box, HStack, Text, useColorMode } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { WalkCard } from "../molecules/WalkCard";
 import { SleepCard } from "../molecules/SleepCard";
@@ -6,16 +6,17 @@ import { TrainingCard } from "../molecules/TrainingCard";
 import { CaloriesCard } from "../molecules/CaloriesCard";
 
 export const HomeCards = () => {
+  const { colorMode } = useColorMode();
   const Month = new Date().getMonth();
   const Day = new Date().getDate();
   const Time = new Date().toLocaleTimeString();
   return (
     <Box ml={5} mr={5}>
       <HStack
+        bg={colorMode === "dark" ? "coolGray.700" : "white"}
         mb={5}
         alignItems="center"
         justifyContent="space-between"
-        background="white"
         p={7}
         borderRadius={20}
       >

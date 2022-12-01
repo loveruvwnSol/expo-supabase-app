@@ -1,25 +1,20 @@
-import { supabase } from "../../libs/supabaseClient";
-import { Box, Button, Fab, Input, Text, Icon } from "native-base";
+import { Box, useColorMode } from "native-base";
 import { HomeCards } from "../organisms/HomeCards";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LogInParamList } from "../../types";
-import { Ionicons } from "@expo/vector-icons";
 import { FabAdd } from "../atoms/FabAdd";
 
 type LogInStackscreenProps = NativeStackScreenProps<LogInParamList>;
 
 export default function Home({ navigation }: LogInStackscreenProps) {
-  const signOut = () => {
-    navigation.navigate("LogIn");
-    supabase.auth.signOut();
-  };
+  const { colorMode } = useColorMode();
   return (
     <Box
+      bg={colorMode === "dark" ? "coolGray.800" : "blueGray.100"}
       w="full"
       h="full"
       justifyContent="center"
       textAlign="center"
-      background="blueGray.100"
     >
       <HomeCards />
       <FabAdd />
