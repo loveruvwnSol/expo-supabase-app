@@ -89,31 +89,28 @@ export const UserIconSettings: React.FC<UserIconSettingsProps> = ({
   };
 
   return (
-    <Box>
-      <Box
-        borderWidth={1}
-        borderRadius={100}
-        borderColor="gray.500"
-        mr={5}
-        mb={5}
-      >
-        <Avatar w={32} h={32} source={{ uri: iconImage }} size="xs">
-          <Avatar.Badge
-            background="white"
-            size={8}
-            borderWidth={1}
-            borderColor="black"
-          >
-            <Box alignItems="center" justifyContent="center">
-              <IconButton
-                onPress={pickImage}
-                p={1}
-                icon={<Ionicons name="reload-circle-outline" size={24} />}
-              />
-            </Box>
-          </Avatar.Badge>
-        </Avatar>
-      </Box>
+    <Box
+      borderWidth={1}
+      borderRadius={100}
+      borderColor="gray.500"
+      mr={5}
+    >
+      <Avatar w={32} h={32} source={{ uri: iconImage }} size="xs">
+        <Avatar.Badge
+          background="white"
+          size={8}
+          borderWidth={1}
+          borderColor="black"
+        >
+          <Box alignItems="center" justifyContent="center">
+            <IconButton
+              onPress={pickImage}
+              p={1}
+              icon={<Ionicons name="reload-circle-outline" size={24} />}
+            />
+          </Box>
+        </Avatar.Badge>
+      </Avatar>
     </Box>
   );
 };

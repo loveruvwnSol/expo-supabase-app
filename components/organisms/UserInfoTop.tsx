@@ -1,43 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, HStack, Text, Button, Avatar } from "native-base";
-import { supabase } from "../../libs/supabaseClient";
 
 type UserInfoTopProps = {
+  user: any;
+  usericon: string | undefined;
   navigation: any;
 };
 
-export const UserInfoTop: React.FC<UserInfoTopProps> = ({ navigation }) => {
-  const [user, setUser] = useState<any>(null);
-  const [usericon, setUsericon] = useState<string | undefined>();
-
-  useEffect(() => {
-    const setupUser = async () => {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("id,user_id, user_name")
-        .eq("id", supabase.auth.user()?.id);
-      if (profile) {
-        setUser(profile[0]);
-      }
-    };
-    setupUser();
-  }, [user]);
-
-  useEffect(() => {
-    const getUserIcon = async () => {
-      if (!user) return;
-      const { publicURL, error } = await supabase.storage
-        .from("avatars")
-        .getPublicUrl(user.id + "_ICON/avatar");
-      if (publicURL) {
-        setUsericon(publicURL);
-      }
-    };
-    getUserIcon();
-  }, [user, usericon]);
-
-  if (!user) return null;
-
+export const UserInfoTop: React.FC<UserInfoTopProps> = ({
+  user,
+  usericon,
+  navigation,
+}) => {
   return (
     <Box mb={10}>
       <HStack alignItems="center">

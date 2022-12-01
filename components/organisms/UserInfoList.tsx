@@ -1,49 +1,130 @@
-import React from "react";
-import { Box, HStack, Text, Switch, Select } from "native-base";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  HStack,
+  Text,
+  Switch,
+  IconButton,
+  useColorMode,
+} from "native-base";
 import { InfoSelectList } from "../../Info";
+import { Ionicons } from "@expo/vector-icons";
+import { supabase } from "../../libs/supabaseClient";
+import { Alert } from "react-native";
 
-export const UserInfoList = () => {
-  const [theme, setTheme] = React.useState("");
-  const [country, setCountry] = React.useState("");
-  const [language, setLanguage] = React.useState("");
-  const [gender, setGender] = React.useState("");
+type UserInfoListProps = {
+  user: any;
+  usericon: string | undefined;
+  navigation: any;
+  notification: boolean | undefined;
+};
+
+export const UserInfoList: React.FC<UserInfoListProps> = ({
+  navigation,
+  notification,
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [switchValue, setSwitchValue] = useState<boolean>();
+  const { colorMode, setColorMode, toggleColorMode } = useColorMode();
+
+  useEffect(() => {
+    if (colorMode === "light") {
+      setSwitchValue(false);
+    } else if (colorMode === "dark") {
+      setSwitchValue(true);
+    }
+  }, [colorMode]);
+
+  function sendNotificationsData() {
+    supabase
+      .from("options")
+      .update({
+        notification: !notification,
+      })
+      .eq("id", supabase.auth.user()?.id)
+      .then(({ data, error }) => {
+        if (error) Alert.alert(error.message);
+        setLoading(false);
+      });
+  }
+
+  async function sendThemeData() {
+    toggleColorMode();
+    await supabase
+      .from("options")
+      .update({
+        theme: colorMode === "dark" ? "light" : "dark",
+      })
+      .eq("id", supabase.auth.user()?.id)
+      .then(({ data, error }) => {
+        if (error) Alert.alert(error.message);
+        setLoading(false);
+      });
+  }
+
   return (
-    <Box background="white" w={"xs"} shadow={0}>
+    <Box w={"xs"}>
       <Box mt={4} ml={4}>
         <Box mb={5}>
-          <Text fontSize={16} fontWeight="thin">
-            オプション
-          </Text>
+          <HStack justifyContent="space-between" alignItems="center">
+            <Text fontSize={16} fontWeight="thin">
+              オプション
+            </Text>
+            <IconButton
+              icon={
+                <Ionicons
+                  name="chevron-forward-circle-outline"
+                  color="gray"
+                  size={24}
+                />
+              }
+              onPress={() => navigation.navigate("OptionSetting")}
+            />
+          </HStack>
           <HStack mt={3} justifyContent="space-between" alignItems="center">
             <Text opacity={0.5} fontWeight="thin">
               通知
             </Text>
-            <Switch mr={5} size={"md"} />
+            <Switch
+              value={notification}
+              mr={5}
+              onToggle={() => {
+                sendNotificationsData();
+              }}
+            />
           </HStack>
           <HStack mt={3} justifyContent="space-between" alignItems="center">
             <Text opacity={0.5} fontWeight="thin">
               テーマ
             </Text>
-            <Select
-              borderWidth={0}
-              selectedValue={theme}
-              minWidth="100"
-              fontSize={12}
-              accessibilityLabel="Select Theme"
-              _selectedItem={{
-                bg: "#06b6d4",
+            <Switch
+              value={switchValue}
+              mr={5}
+              offTrackColor="gray.300"
+              offThumbColor="white"
+              onTrackColor="black"
+              onToggle={() => {
+                sendThemeData();
               }}
-              onValueChange={(itemValue) => setTheme(itemValue)}
-            >
-              <Select.Item label="Light" value="Light" />
-              <Select.Item label="Dark" value="Dark" />
-            </Select>
+            />
           </HStack>
         </Box>
         <Box mb={5}>
-          <Text fontSize={16} fontWeight="thin">
-            アカウント
-          </Text>
+          <HStack justifyContent="space-between" alignItems="center">
+            <Text fontSize={16} fontWeight="thin">
+              アカウント
+            </Text>
+            <IconButton
+              icon={
+                <Ionicons
+                  name="chevron-forward-circle-outline"
+                  color="gray"
+                  size={24}
+                />
+              }
+              onPress={() => navigation.navigate("UserDetailSetting")}
+            />
+          </HStack>
           {InfoSelectList.map((e, idx) => (
             <HStack
               key={idx}
@@ -54,26 +135,6 @@ export const UserInfoList = () => {
               <Text opacity={0.5} fontWeight="thin">
                 {e.title}
               </Text>
-              <Select
-                borderWidth={0}
-                selectedValue={e.state}
-                minWidth={e.minWidth}
-                fontSize={12}
-                accessibilityLabel="Select language"
-                _selectedItem={{
-                  bg: "#06b6d4",
-                }}
-                onValueChange={(itemValue) => {
-                  {
-                    e.setState;
-                  }
-                  itemValue;
-                }}
-              >
-                {e.map.map((e, idx) => (
-                  <Select.Item key={idx} label={e.label} value={e.value} />
-                ))}
-              </Select>
             </HStack>
           ))}
         </Box>
