@@ -19,7 +19,9 @@ export const UserInfo = ({ navigation }: UserSettingsStackscreenProps) => {
     const setupUser = async () => {
       const { data: profile } = await supabase
         .from("profiles")
-        .select("id,user_id, user_name")
+        .select(
+          "id,user_id, user_name, user_gender, user_country, user_language"
+        )
         .eq("id", supabase.auth.user()?.id);
       if (profile) {
         setUser(profile[0]);
