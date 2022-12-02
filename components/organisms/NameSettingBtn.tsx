@@ -34,6 +34,9 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
           user_email: session?.user?.email,
           user_name: username,
           user_id: userid,
+          user_gender: "未設定",
+          user_country: "未設定",
+          user_language: "日本語",
         },
       ])
       .then(({ data, error }) => {
