@@ -25,6 +25,7 @@ import { Box, Avatar, useColorMode, useColorModeValue } from "native-base";
 import ModalScreen from "../screens/ModalScreen";
 import { UserDetailSetting } from "../components/templates/UserDetailSetting";
 import { OptionSetting } from "../components/templates/OptionSetting";
+import { NotificationsPage } from "../components/templates/NotificationsPage";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -129,15 +130,18 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabThree"
-        component={ModalScreen}
+        component={NotificationsPage}
         options={{
           title: "通知",
+          headerTitleStyle: {
+            fontWeight: "200",
+          },
           tabBarIcon: ({ color }) => (
             <Ionicons name="notifications-outline" size={24} color={color} />
           ),
         }}
       />
-       <BottomTab.Screen
+      <BottomTab.Screen
         name="TabFour"
         component={ModalScreen}
         options={{
