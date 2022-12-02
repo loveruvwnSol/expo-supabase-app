@@ -7,7 +7,7 @@ import {
   IconButton,
   useColorMode,
 } from "native-base";
-import { InfoSelectList } from "../../Info";
+import { CountryList, GenderList, Languages } from "../../Info";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../libs/supabaseClient";
 import { Alert } from "react-native";
@@ -20,6 +20,7 @@ type UserInfoListProps = {
 };
 
 export const UserInfoList: React.FC<UserInfoListProps> = ({
+  user,
   navigation,
   notification,
 }) => {
@@ -34,6 +35,33 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
       setSwitchValue(true);
     }
   }, [colorMode]);
+
+  const InfoSelectList = [
+    {
+      title: "性別",
+      state: "gender",
+      setState: "setGender",
+      minWidth: "90",
+      map: GenderList,
+      res: user.user_gender,
+    },
+    {
+      title: "国",
+      state: "country",
+      setState: "setCountry",
+      minWidth: "140",
+      map: CountryList,
+      res: user.user_country,
+    },
+    {
+      title: "言語",
+      state: "language",
+      setState: "setLanguage",
+      minWidth: "120",
+      map: Languages,
+      res: user.user_language,
+    },
+  ];
 
   function sendNotificationsData() {
     supabase
@@ -64,7 +92,7 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
 
   return (
     <Box w={"xs"}>
-      <Box mt={4} ml={4}>
+      <Box mt={4} ml={4} mr={5}>
         <Box mb={5}>
           <HStack justifyContent="space-between" alignItems="center">
             <Text fontSize={16} fontWeight="thin">
@@ -87,7 +115,7 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
             </Text>
             <Switch
               value={notification}
-              mr={5}
+              // mr={5}
               onToggle={() => {
                 sendNotificationsData();
               }}
@@ -99,7 +127,7 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
             </Text>
             <Switch
               value={switchValue}
-              mr={5}
+              // mr={5}
               offTrackColor="gray.300"
               offThumbColor="white"
               onTrackColor="black"
@@ -134,6 +162,9 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
             >
               <Text opacity={0.5} fontWeight="thin">
                 {e.title}
+              </Text>
+              <Text opacity={0.5} fontWeight="thin">
+                {e.res}
               </Text>
             </HStack>
           ))}
