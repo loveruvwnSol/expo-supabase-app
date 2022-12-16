@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Avatar, Button } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
 import * as ImagePicker from "expo-image-picker";
+import { useUserInfo } from "../../hooks/useUserInfo";
 
 type IconSettingBtnProps = {
   navigation: any;
@@ -10,21 +11,8 @@ type IconSettingBtnProps = {
 export const IconSettingBtn: React.FC<IconSettingBtnProps> = ({
   navigation,
 }) => {
+  const user = useUserInfo();
   const [iconImage, setIconImage] = useState<string | undefined>();
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("id", supabase.auth.user()?.id);
-      if (profile) {
-        setUser(profile[0]);
-      }
-    };
-    getUserInfo();
-  }, []);
 
   const uploadFromURI = async (photo: ImagePicker.ImagePickerResult) => {
     if (!photo.cancelled) {

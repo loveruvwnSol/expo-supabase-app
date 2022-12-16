@@ -12,16 +12,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
 
-import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import BottomTabNavigator, {
   UserSettingsNavigator,
 } from "./bottomTabNavigator";
-import { useEffect, useState } from "react";
-import { supabase } from "../libs/supabaseClient";
-import { Session } from "@supabase/supabase-js";
 import { LogInNavigator } from "./logInNavigator";
 
 export default function Navigation({
@@ -46,15 +42,6 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const [session, setSession] = useState<Session | null>(null);
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
-
   return (
     <Stack.Navigator>
       <Stack.Group screenOptions={{ presentation: "transparentModal" }}>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Button } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
-import { Session } from "@supabase/supabase-js";
 import { Alert } from "react-native";
+import { useSession } from "../../hooks/useSession";
 
 type NameSettingBtnProps = {
   username: any;
@@ -15,15 +15,8 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
   userid,
   navigation,
 }) => {
-  const [session, setSession] = useState<Session | null>(null);
+  const session = useSession();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
 
   function sendData() {
     supabase
@@ -39,7 +32,7 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
           user_language: "日本語",
         },
       ])
-      .then(({ data, error }) => {
+      .then(({ error }) => {
         if (error) Alert.alert(error.message);
         setLoading(false);
       });

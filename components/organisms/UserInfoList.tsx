@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   HStack,
@@ -7,61 +7,25 @@ import {
   IconButton,
   useColorMode,
 } from "native-base";
-import { CountryList, GenderList, Languages } from "../../Info";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../libs/supabaseClient";
 import { Alert } from "react-native";
+import { useSwitchValue } from "../../hooks/useColorModeValue";
+import { UserDetailList } from "../molecules/UserDetailList";
 
 type UserInfoListProps = {
-  user: any;
   usericon: string | undefined;
   navigation: any;
   notification: boolean | undefined;
 };
 
 export const UserInfoList: React.FC<UserInfoListProps> = ({
-  user,
   navigation,
   notification,
 }) => {
+  const switchValue = useSwitchValue();
   const [loading, setLoading] = useState(false);
-  const [switchValue, setSwitchValue] = useState<boolean>();
-  const { colorMode, setColorMode, toggleColorMode } = useColorMode();
-
-  useEffect(() => {
-    if (colorMode === "light") {
-      setSwitchValue(false);
-    } else if (colorMode === "dark") {
-      setSwitchValue(true);
-    }
-  }, [colorMode]);
-
-  const InfoSelectList = [
-    {
-      title: "性別",
-      state: "gender",
-      setState: "setGender",
-      minWidth: "90",
-      map: GenderList,
-      res: user.user_gender,
-    },
-    {
-      title: "国",
-      state: "country",
-      setState: "setCountry",
-      minWidth: "140",
-      map: CountryList,
-      res: user.user_country,
-    },
-    {
-      title: "言語",
-      state: "language",
-      setState: "setLanguage",
-      minWidth: "120",
-      map: Languages,
-      res: user.user_language,
-    },
-  ];
+  const { colorMode, toggleColorMode } = useColorMode();
 
   function sendNotificationsData() {
     supabase
@@ -70,7 +34,7 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
         notification: !notification,
       })
       .eq("id", supabase.auth.user()?.id)
-      .then(({ data, error }) => {
+      .then(({ error }) => {
         if (error) Alert.alert(error.message);
         setLoading(false);
       });
@@ -84,7 +48,7 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
         theme: colorMode === "dark" ? "light" : "dark",
       })
       .eq("id", supabase.auth.user()?.id)
-      .then(({ data, error }) => {
+      .then(({ error }) => {
         if (error) Alert.alert(error.message);
         setLoading(false);
       });
@@ -115,7 +79,6 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
             </Text>
             <Switch
               value={notification}
-              // mr={5}
               onToggle={() => {
                 sendNotificationsData();
               }}
@@ -127,7 +90,6 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
             </Text>
             <Switch
               value={switchValue}
-              // mr={5}
               offTrackColor="gray.300"
               offThumbColor="white"
               onTrackColor="black"
@@ -153,21 +115,7 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
               onPress={() => navigation.navigate("UserDetailSetting")}
             />
           </HStack>
-          {InfoSelectList.map((e, idx) => (
-            <HStack
-              key={idx}
-              mt={3}
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Text opacity={0.5} fontWeight="thin">
-                {e.title}
-              </Text>
-              <Text opacity={0.5} fontWeight="thin">
-                {e.res}
-              </Text>
-            </HStack>
-          ))}
+          <UserDetailList />
         </Box>
       </Box>
     </Box>

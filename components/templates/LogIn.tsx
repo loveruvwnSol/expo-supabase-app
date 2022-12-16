@@ -10,7 +10,7 @@ type LogInStackscreenProps = NativeStackScreenProps<LogInParamList>;
 export default function LogIn({ navigation }: LogInStackscreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
 
   return (
     <Box h="full" alignItems="center" justifyContent="center">

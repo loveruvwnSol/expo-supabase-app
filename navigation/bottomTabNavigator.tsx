@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Pressable } from "react-native";
 import Home from "../components/templates/Home";
 import { UserInfo } from "../components/templates/UserInfo";
@@ -20,13 +20,13 @@ import {
   RootTabScreenProps,
   UserSettingsParamList,
 } from "../types";
-import { supabase } from "../libs/supabaseClient";
-import { Box, Avatar, useColorMode, useColorModeValue } from "native-base";
+import { Box, Avatar, useColorModeValue } from "native-base";
 import ModalScreen from "../screens/ModalScreen";
 import { UserDetailSetting } from "../components/templates/UserDetailSetting";
 import { OptionSetting } from "../components/templates/OptionSetting";
 import { NotificationsPage } from "../components/templates/NotificationsPage";
 import * as Notifications from "expo-notifications";
+import { useUserIcon, useUserInfo } from "../hooks/useUserInfo";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -36,48 +36,8 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
-  const [user, setUser] = useState<any>(null);
-  const [usericon, setUsericon] = useState<string | undefined>();
-  const { colorMode, setColorMode } = useColorMode();
-
-  useEffect(() => {
-    const setupUser = async () => {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("id,user_id, user_name")
-        .eq("id", supabase.auth.user()?.id);
-      if (profile) {
-        setUser(profile[0]);
-      }
-    };
-    setupUser();
-  }, [user]);
-
-  useEffect(() => {
-    const getUserIcon = async () => {
-      if (!user) return;
-      const { publicURL, error } = await supabase.storage
-        .from("avatars")
-        .getPublicUrl(user.id + "_ICON/avatar");
-      if (publicURL) {
-        setUsericon(publicURL);
-      }
-    };
-    getUserIcon();
-  }, [user, usericon]);
-
-  useEffect(() => {
-    const getOptions = async () => {
-      const { data: data } = await supabase
-        .from("options")
-        .select("theme")
-        .eq("id", supabase.auth.user()?.id);
-      if (data) {
-        setColorMode(data[0].theme);
-      }
-    };
-    getOptions();
-  }, [colorMode]);
+  const user = useUserInfo();
+  const usericon = useUserIcon();
 
   const requestPermissionsAsync = async () => {
     const { granted } = await Notifications.getPermissionsAsync();
@@ -172,7 +132,6 @@ export default function BottomTabNavigator() {
 const UserSettingsStack = createNativeStackNavigator<UserSettingsParamList>();
 
 export function UserSettingsNavigator() {
-  const { colorMode, setColorMode } = useColorMode();
   return (
     <UserSettingsStack.Navigator initialRouteName="UserInfo" screenOptions={{}}>
       <UserSettingsStack.Group

@@ -5,6 +5,7 @@ import { supabase } from "../../libs/supabaseClient";
 import * as ImagePicker from "expo-image-picker";
 import * as Notifications from "expo-notifications";
 import { Alert } from "react-native";
+import { useUserInfo } from "../../hooks/useUserInfo";
 
 type UserIconSettingsProps = {
   navigation: any;
@@ -13,21 +14,8 @@ type UserIconSettingsProps = {
 export const UserIconSettings: React.FC<UserIconSettingsProps> = ({
   navigation,
 }) => {
+  const user = useUserInfo();
   const [iconImage, setIconImage] = useState<string | undefined>();
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("id")
-        .eq("id", supabase.auth.user()?.id);
-      if (profile) {
-        setUser(profile[0]);
-      }
-    };
-    getUserInfo();
-  }, []);
 
   useEffect(() => {
     const getUserIcon = async () => {

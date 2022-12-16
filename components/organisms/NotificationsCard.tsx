@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Box, Text, HStack, Avatar, ScrollView } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useColorMode } from "native-base";
-import { supabase } from "../../libs/supabaseClient";
 import dayjs from "dayjs";
+import { useNotificationsHistory } from "../../hooks/useUserInfo";
 
 type NotificationsCardProps = {
   usericon: string | undefined;
@@ -13,20 +13,7 @@ export const NotificationsCard: React.FC<NotificationsCardProps> = ({
   usericon,
 }) => {
   const { colorMode } = useColorMode();
-  const [notification, setNotification] = useState<any[]>([]);
-
-  useEffect(() => {
-    const getNotifications = async () => {
-      const { data } = await supabase
-        .from("notifications")
-        .select("text,timestamp")
-        .eq("user_id", supabase.auth.user()?.id);
-      if (data) {
-        setNotification([...notification, ...data]);
-      }
-    };
-    getNotifications();
-  }, []);
+  const notification = useNotificationsHistory();
 
   return (
     <ScrollView>

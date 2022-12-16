@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Text, Button, VStack, Input, useColorMode } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
-import { Session } from "@supabase/supabase-js";
 import { Alert } from "react-native";
 
 type UserNameSettingsProps = {
@@ -11,25 +10,17 @@ type UserNameSettingsProps = {
 export const UserNameSettings: React.FC<UserNameSettingsProps> = ({
   navigation,
 }) => {
-  const [session, setSession] = useState<Session | null>(null);
   const [username, setUsername] = useState("");
   const [userid, setUserid] = useState("");
   const [loading, setLoading] = useState(false);
   const { colorMode } = useColorMode();
-
-  useEffect(() => {
-    setSession(supabase.auth.session());
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
 
   function updateData() {
     supabase
       .from("profiles")
       .update([
         {
-          id: session?.user?.id,
+          id: supabase.auth.user()?.id,
           user_name: username,
           user_id: userid,
         },

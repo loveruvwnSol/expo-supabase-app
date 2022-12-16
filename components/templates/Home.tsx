@@ -1,12 +1,8 @@
 import { Box, useColorMode } from "native-base";
 import { HomeCards } from "../organisms/HomeCards";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { LogInParamList } from "../../types";
 import { FabAdd } from "../atoms/FabAdd";
 
-type LogInStackscreenProps = NativeStackScreenProps<LogInParamList>;
-
-export default function Home({ navigation }: LogInStackscreenProps) {
+export default function Home() {
   const { colorMode } = useColorMode();
   return (
     <Box
