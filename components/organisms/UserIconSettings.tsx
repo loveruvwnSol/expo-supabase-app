@@ -3,6 +3,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Box, Avatar, IconButton } from "native-base";
 import { supabase } from "../../libs/supabaseClient";
 import * as ImagePicker from "expo-image-picker";
+import * as Notifications from "expo-notifications";
+import { Alert } from "react-native";
 
 type UserIconSettingsProps = {
   navigation: any;
@@ -13,7 +15,6 @@ export const UserIconSettings: React.FC<UserIconSettingsProps> = ({
 }) => {
   const [iconImage, setIconImage] = useState<string | undefined>();
   const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -31,7 +32,7 @@ export const UserIconSettings: React.FC<UserIconSettingsProps> = ({
   useEffect(() => {
     const getUserIcon = async () => {
       if (!user) return;
-      const { publicURL, error } = await supabase.storage
+      const { publicURL } = await supabase.storage
         .from("avatars")
         .getPublicUrl(user.id + "_ICON/avatar");
       if (publicURL && !iconImage) {
@@ -40,6 +41,35 @@ export const UserIconSettings: React.FC<UserIconSettingsProps> = ({
     };
     getUserIcon();
   }, [user, iconImage]);
+
+  const changeIconNotificationAsync = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        body: "アイコンを変更しました",
+        badge: 0,
+      },
+      trigger: {
+        seconds: 1,
+      },
+    });
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+      }),
+    });
+    supabase
+      .from("notifications")
+      .insert({
+        user_id: supabase.auth.user()?.id,
+        text: "アイコンを変更しました",
+      })
+      .eq("id", supabase.auth.user()?.id)
+      .then(({ error }) => {
+        if (error) Alert.alert(error.message);
+      });
+  };
 
   const updateFromURI = async (photo: ImagePicker.ImagePickerResult) => {
     if (!photo.cancelled) {
@@ -61,7 +91,7 @@ export const UserIconSettings: React.FC<UserIconSettingsProps> = ({
       console.log(data, error);
       setIconImage(photo.uri);
       if (!error) {
-        alert("アイコンの変更が完了しました");
+        changeIconNotificationAsync();
         navigation.navigate("UserInfo");
       }
 
@@ -89,12 +119,7 @@ export const UserIconSettings: React.FC<UserIconSettingsProps> = ({
   };
 
   return (
-    <Box
-      borderWidth={1}
-      borderRadius={100}
-      borderColor="gray.500"
-      mr={5}
-    >
+    <Box borderWidth={1} borderRadius={100} borderColor="gray.500" mr={5}>
       <Avatar w={32} h={32} source={{ uri: iconImage }} size="xs">
         <Avatar.Badge
           background="white"

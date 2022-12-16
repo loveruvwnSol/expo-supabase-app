@@ -26,6 +26,7 @@ import ModalScreen from "../screens/ModalScreen";
 import { UserDetailSetting } from "../components/templates/UserDetailSetting";
 import { OptionSetting } from "../components/templates/OptionSetting";
 import { NotificationsPage } from "../components/templates/NotificationsPage";
+import * as Notifications from "expo-notifications";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -78,6 +79,19 @@ export default function BottomTabNavigator() {
     getOptions();
   }, [colorMode]);
 
+  const requestPermissionsAsync = async () => {
+    const { granted } = await Notifications.getPermissionsAsync();
+    if (granted) {
+      return;
+    }
+
+    await Notifications.requestPermissionsAsync();
+  };
+
+  useEffect(() => {
+    requestPermissionsAsync();
+  });
+
   if (!user) return null;
 
   return (
@@ -107,7 +121,7 @@ export default function BottomTabNavigator() {
               })}
             >
               <Box
-                borderWidth={0.8}
+                borderWidth={0.5}
                 borderRadius={100}
                 borderColor="gray.500"
                 mr={5}

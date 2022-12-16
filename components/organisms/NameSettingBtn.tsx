@@ -42,7 +42,6 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
       .then(({ data, error }) => {
         if (error) Alert.alert(error.message);
         setLoading(false);
-        if (!error) navigation.navigate("IconSetting");
       });
 
     supabase
@@ -54,7 +53,7 @@ export const NameSettingBtn: React.FC<NameSettingBtnProps> = ({
           theme: "light",
         },
       ])
-      .then(({ data, error }) => {
+      .then(({ error }) => {
         if (error) Alert.alert(error.message);
         setLoading(false);
         if (!error) navigation.navigate("IconSetting");
