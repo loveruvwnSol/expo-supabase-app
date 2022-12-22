@@ -27,6 +27,7 @@ import { OptionSetting } from "../components/templates/OptionSetting";
 import { NotificationsPage } from "../components/templates/NotificationsPage";
 import * as Notifications from "expo-notifications";
 import { useUserIcon, useUserInfo } from "../hooks/useUserInfo";
+import { Settings } from "../components/templates/Settings";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -117,9 +118,12 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabFour"
-        component={ModalScreen}
+        component={Settings}
         options={{
           title: "設定",
+          headerTitleStyle: {
+            fontWeight: "200",
+          },
           tabBarIcon: ({ color }) => (
             <Ionicons name="settings-outline" size={24} color={color} />
           ),
