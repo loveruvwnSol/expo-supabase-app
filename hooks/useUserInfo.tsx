@@ -1,3 +1,4 @@
+import { useColorMode } from "native-base";
 import { useState, useEffect } from "react";
 import { supabase } from "../libs/supabaseClient";
 
@@ -43,18 +44,20 @@ export const useUserIcon = () => {
 export const useNotifications = () => {
   const user = useUserInfo();
   const [notification, setNotification] = useState<boolean>();
+  const { colorMode, setColorMode } = useColorMode();
   useEffect(() => {
     const getOptions = async () => {
       const { data: data } = await supabase
         .from("options")
-        .select("notification")
+        .select("notification,theme")
         .eq("id", supabase.auth.user()?.id);
       if (data) {
         setNotification(data[0].notification);
+        setColorMode(data[0].theme);
       }
     };
     getOptions();
-  }, [user, notification]);
+  }, [user, notification, colorMode]);
 
   return notification;
 };
