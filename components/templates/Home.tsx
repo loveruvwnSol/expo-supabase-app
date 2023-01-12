@@ -5,8 +5,7 @@ import { useNotifications } from "../../hooks/useUserInfo";
 
 export default function Home() {
   const { colorMode } = useColorMode();
-  const notification = useNotifications();
-  // get theme
+  useNotifications(); // get theme
   return (
     <Box
       bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
