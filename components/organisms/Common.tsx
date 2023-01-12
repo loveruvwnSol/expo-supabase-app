@@ -13,7 +13,7 @@ export const Common = () => {
         common
       </Text>
       <Box
-        bg={colorMode === "dark" ? "coolGray.700" : "white"}
+        bg={colorMode === "dark" ? "black" : "white"}
         w={72}
         borderRadius={18}
       >

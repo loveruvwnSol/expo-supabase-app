@@ -12,7 +12,7 @@ export const UserSettings = ({ navigation }: UserSettingsStackscreenProps) => {
   const { colorMode } = useColorMode();
   return (
     <Box
-      bg={colorMode === "dark" ? "coolGray.800" : "blueGray.100"}
+      bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
       h="full"
       justifyContent="center"
     >

@@ -10,7 +10,7 @@ export const NotificationsPage = () => {
 
   return (
     <Box
-      bg={colorMode === "dark" ? "coolGray.800" : "blueGray.100"}
+      bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
       w="full"
       h="full"
       alignItems="center"

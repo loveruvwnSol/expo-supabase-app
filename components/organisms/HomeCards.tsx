@@ -13,7 +13,7 @@ export const HomeCards = () => {
   return (
     <Box ml={5} mr={5}>
       <HStack
-        bg={colorMode === "dark" ? "coolGray.700" : "white"}
+        bg={colorMode === "dark" ? "black" : "white"}
         mb={5}
         alignItems="center"
         justifyContent="space-between"

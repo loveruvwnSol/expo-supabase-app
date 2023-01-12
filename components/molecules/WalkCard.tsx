@@ -5,7 +5,7 @@ export const WalkCard = () => {
   const { colorMode } = useColorMode();
   return (
     <Box
-      bg={colorMode === "dark" ? "coolGray.700" : "white"}
+      bg={colorMode === "dark" ? "black" : "white"}
       w={40}
       h={32}
       p={5}

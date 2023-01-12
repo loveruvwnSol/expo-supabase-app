@@ -20,7 +20,7 @@ export const NotificationsCard: React.FC<NotificationsCardProps> = ({
       {notification.map((e, idx) => (
         <Box
           key={idx}
-          bg={colorMode === "dark" ? "coolGray.700" : "white"}
+          bg={colorMode === "dark" ? "black" : "white"}
           mt={3.5}
           mb={3.5}
           w={72}

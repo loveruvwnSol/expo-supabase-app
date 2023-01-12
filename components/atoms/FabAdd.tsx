@@ -6,7 +6,7 @@ export const FabAdd = () => {
   return (
     <Box mt={24} shadow="2" rounded="lg">
       <Fab
-        bg={colorMode === "dark" ? "coolGray.700" : "white"}
+        bg={colorMode === "dark" ? "black" : "white"}
         renderInPortal={false}
         shadow={2}
         size="sm"

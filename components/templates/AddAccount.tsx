@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Box, Input, Text, Pressable, Icon, Link } from "native-base";
+import {
+  Box,
+  Input,
+  Text,
+  Pressable,
+  Icon,
+  Link,
+  useColorMode,
+} from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LogInParamList } from "../../types";
@@ -11,10 +19,22 @@ export default function AddAccount({ navigation }: LogInStackscreenProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = React.useState(false);
+  const { colorMode } = useColorMode();
 
   return (
-    <Box h="full" alignItems="center" justifyContent="center">
-      <Text fontSize={24} textAlign="center" mb={5} fontWeight="thin">
+    <Box
+      h="full"
+      alignItems="center"
+      justifyContent="center"
+      bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
+    >
+      <Text
+        fontSize={24}
+        textAlign="center"
+        mb={5}
+        fontWeight="thin"
+        color={colorMode === "dark" ? "white" : "black"}
+      >
         アカウント作成
       </Text>
       <Box mb={5}>
