@@ -1,11 +1,30 @@
-import React from "react";
-import { Box, Divider, HStack, Text, useColorMode } from "native-base";
+import React, { useState } from "react";
+import { Box, Divider, HStack, Text, useColorMode, Switch } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { useUserInfo } from "../../hooks/useUserInfo";
+import { supabase } from "../../libs/supabaseClient";
+import { useSwitchValue } from "../../hooks/useColorModeValue";
+import { Alert } from "react-native";
 
 export const Common = () => {
-  const { colorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
   const user = useUserInfo();
+  const [loading, setLoading] = useState(false);
+  const switchValue = useSwitchValue();
+
+  async function sendThemeData() {
+    toggleColorMode();
+    await supabase
+      .from("options")
+      .update({
+        theme: colorMode === "dark" ? "light" : "dark",
+      })
+      .eq("id", supabase.auth.user()?.id)
+      .then(({ error }) => {
+        if (error) Alert.alert(error.message);
+        setLoading(false);
+      });
+  }
 
   return (
     <Box>
@@ -86,10 +105,15 @@ export const Common = () => {
             </Text>
           </HStack>
           <HStack alignItems="center">
-            <Text mr={2} opacity={colorMode === "dark" ? "0.5" : "0.3"}>
-              {colorMode}
-            </Text>
-            <Ionicons name="chevron-forward-outline" color="gray" size={16} />
+            <Switch
+              value={switchValue}
+              offTrackColor="gray.300"
+              offThumbColor="white"
+              onTrackColor="black"
+              onToggle={() => {
+                sendThemeData();
+              }}
+            />
           </HStack>
         </HStack>
       </Box>
