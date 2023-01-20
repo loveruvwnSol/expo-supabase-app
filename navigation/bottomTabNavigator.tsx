@@ -28,6 +28,7 @@ import { NotificationsPage } from "../components/templates/NotificationsPage";
 import * as Notifications from "expo-notifications";
 import { useUserIcon, useUserInfo } from "../hooks/useUserInfo";
 import { Settings } from "../components/templates/Settings";
+import { Timeline } from "../components/templates/Timeline";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -95,11 +96,14 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={ModalScreen}
+        component={Timeline}
         options={{
-          title: "グラフ",
+          title: "みんなの投稿",
+          headerTitleStyle: {
+            fontWeight: "200",
+          },
           tabBarIcon: ({ color }) => (
-            <Ionicons name="analytics-outline" size={24} color={color} />
+            <Ionicons name="people-outline" size={24} color={color} />
           ),
         }}
       />
