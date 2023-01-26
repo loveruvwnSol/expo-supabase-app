@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { usePost } from "../../hooks/useTlinfo";
 import { supabase } from "../../libs/supabaseClient";
+import { PostIcons } from "../molecules/PostIcons";
 
 export const Posts = () => {
   const { colorMode } = useColorMode();
@@ -75,6 +76,7 @@ export const Posts = () => {
                     <Box mt={2} ml={2} w={64}>
                       <Text fontWeight="thin">{e.text}</Text>
                     </Box>
+                    <PostIcons />
                   </Box>
                 </HStack>
               </HStack>
