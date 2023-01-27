@@ -21,6 +21,7 @@ export type RootStackParamList = {
   NameSetting: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   UserSettingsModal: undefined;
+  AddPost: undefined;
   NotFound: undefined;
 };
 
@@ -36,6 +37,10 @@ export type UserSettingsParamList = {
   UserSetting: undefined;
   UserDetailSetting: undefined;
   OptionSetting: undefined;
+};
+
+export type TimelineParamList = {
+  Timeline: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
