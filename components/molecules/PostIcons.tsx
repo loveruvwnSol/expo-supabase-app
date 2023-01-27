@@ -25,6 +25,7 @@ export const PostIcons = () => {
       </HStack>
       <HStack alignItems="center" ml={6}>
         <IconButton
+          borderRadius="full"
           onTouchStart={touchHeart}
           icon={
             toggleIcon ? (
