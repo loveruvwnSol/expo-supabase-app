@@ -18,10 +18,10 @@ import useColorScheme from "../hooks/useColorScheme";
 import {
   RootTabParamList,
   RootTabScreenProps,
+  TimelineParamList,
   UserSettingsParamList,
 } from "../types";
-import { Box, Avatar, useColorModeValue } from "native-base";
-import ModalScreen from "../screens/ModalScreen";
+import { Box, Avatar, useColorModeValue, IconButton } from "native-base";
 import { UserDetailSetting } from "../components/templates/UserDetailSetting";
 import { OptionSetting } from "../components/templates/OptionSetting";
 import { NotificationsPage } from "../components/templates/NotificationsPage";
@@ -97,7 +97,7 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={Timeline}
-        options={{
+        options={({ navigation }: RootTabScreenProps<"TabTwo">) => ({
           title: "みんなの投稿",
           headerTitleStyle: {
             fontWeight: "200",
@@ -105,7 +105,26 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="people-outline" size={24} color={color} />
           ),
-        }}
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate("AddPost")}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}
+            >
+              <Box
+                borderWidth={0.5}
+                borderRadius={4}
+                borderColor="gray.500"
+                mr={5}
+              >
+                <Box m={1}>
+                  <Ionicons name="pencil-sharp" color="dodgerblue" size={20} />
+                </Box>
+              </Box>
+            </Pressable>
+          ),
+        })}
       />
       <BottomTab.Screen
         name="TabThree"
@@ -188,5 +207,21 @@ export function UserSettingsNavigator() {
         />
       </UserSettingsStack.Group>
     </UserSettingsStack.Navigator>
+  );
+}
+
+const TimelineStack = createNativeStackNavigator<TimelineParamList>();
+
+export function TimelineNavigator() {
+  return (
+    <TimelineStack.Navigator initialRouteName="Timeline">
+      <TimelineStack.Group
+        screenOptions={{
+          animation: "simple_push",
+        }}
+      >
+        <TimelineStack.Screen name="Timeline" component={Timeline} />
+      </TimelineStack.Group>
+    </TimelineStack.Navigator>
   );
 }

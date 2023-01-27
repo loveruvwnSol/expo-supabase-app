@@ -19,6 +19,7 @@ import BottomTabNavigator, {
   UserSettingsNavigator,
 } from "./bottomTabNavigator";
 import { LogInNavigator } from "./logInNavigator";
+import { AddPost } from "../components/templates/AddPost";
 
 export default function Navigation({
   colorScheme,
@@ -69,6 +70,11 @@ function RootNavigator() {
         <Stack.Screen
           name="UserSettingsModal"
           component={UserSettingsNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddPost"
+          component={AddPost}
           options={{ headerShown: false }}
         />
       </Stack.Group>
