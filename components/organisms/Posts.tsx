@@ -16,7 +16,7 @@ import { PostIcons } from "../molecules/PostIcons";
 
 export const Posts = () => {
   const { colorMode } = useColorMode();
-  const posts = usePost();
+  const { posts } = usePost();
 
   return (
     <ScrollView w={["96", "full"]}>
@@ -71,7 +71,7 @@ export const Posts = () => {
                       </HStack>
                     </HStack>
                     <Text fontWeight="thin" ml={2} opacity="0.5" fontSize={12}>
-                      {e.user_id}
+                      {"@" + e.user_id}
                     </Text>
                     <Box mt={2} ml={2} w={64}>
                       <Text fontWeight="thin">{e.text}</Text>
@@ -81,7 +81,7 @@ export const Posts = () => {
                 </HStack>
               </HStack>
             </Box>
-            <Divider h={"0.4"} />
+            <Divider opacity={0.5} />
           </Box>
         );
       })}

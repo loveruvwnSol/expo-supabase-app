@@ -1,39 +1,40 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { supabase } from "../libs/supabaseClient";
-import { useUserInfo } from "./useUserInfo";
+import { create } from "zustand";
 
-export const usePost = () => {
-  const [posts, setPosts] = useState<any[]>([]);
-  useEffect(() => {
-    const getPostInfo = async () => {
-      const { data } = await supabase
-        .from("timeline")
-        .select("id,user_name,user_id,text,timestamp");
-      if (data) {
-        setPosts([...posts, ...data]);
-      }
-    };
-    getPostInfo();
-  }, []);
-
-  return posts;
+type Post = {
+  id: string;
+  user_name: string;
+  user_id: string;
+  timestamp: Date;
+  text: string;
 };
 
-export const usePostUserIcon = () => {
-  const user = useUserInfo();
-  const [usericon, setIconImage] = useState<string | undefined>();
-  useEffect(() => {
-    const getIcon = async () => {
-      if (!user) return;
-      const { publicURL } = await supabase.storage
-        .from("avatars")
-        .getPublicUrl(supabase.from("timeline").select("id") + "_ICON/avatar");
-      if (publicURL && !usericon) {
-        setIconImage(publicURL);
-      }
-    };
-    getIcon();
-  }, [usericon]);
+type UsePostStoreType = {
+  posts: Post[];
+  setPosts: (newPosts: Post[]) => void;
+};
 
-  return usericon;
+export const usePostStore = create<UsePostStoreType>((set) => ({
+  posts: [],
+  setPosts: (newPosts) => set(() => ({ posts: [...newPosts] })),
+}));
+
+export const usePost = () => {
+  const setPosts = usePostStore((s) => s.setPosts);
+  const posts = usePostStore((s) => s.posts);
+  useEffect(() => {
+    getPostInfo();
+  }, []);
+  const getPostInfo = async () => {
+    const { data } = await supabase
+      .from("timeline")
+      .select("id,user_name,user_id,text,timestamp");
+    if (data) {
+      console.log(data);
+      setPosts(data);
+    }
+  };
+
+  return { posts, getPostInfo };
 };

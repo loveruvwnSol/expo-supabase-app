@@ -4,7 +4,6 @@ import { Posts } from "../organisms/Posts";
 
 export const Timeline = () => {
   const { colorMode } = useColorMode();
-
   return (
     <Box
       bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
