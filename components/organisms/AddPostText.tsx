@@ -7,31 +7,31 @@ import { usePost } from "../../hooks/useTlinfo";
 
 type AddPostText = {
   user: any;
+  onSendFinish: () => void;
 };
 
-export const AddPostText: React.FC<AddPostText> = ({ user }) => {
+export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
   const [textAreaValue, setTextAreaValue] = useState("");
   const { getPostInfo } = usePost();
   const AddPostData = async () => {
-    supabase
-      .from("timeline")
-      .insert({
-        id: user && user.id,
-        user_name: user && user.user_name,
-        user_id: user && user.user_id,
-        text: textAreaValue,
-      })
-      .then(({ error }) => {
-        if (error) Alert.alert(error.message);
-        else if (textAreaValue === "") {
-          Alert.alert("テキストが入力されていません");
-        } else {
+    if (!textAreaValue || !textAreaValue.match(/\S/g)) return;
+    if (textAreaValue.length >= 1) {
+      supabase
+        .from("timeline")
+        .insert({
+          id: user && user.id,
+          user_name: user && user.user_name,
+          user_id: user && user.user_id,
+          text: textAreaValue,
+        })
+        .then(({ error }) => {
+          if (error) Alert.alert(error.message);
           Alert.alert("投稿が完了しました");
-          console.log(textAreaValue);
           setTextAreaValue("");
           getPostInfo();
-        }
-      });
+          onSendFinish();
+        });
+    }
   };
 
   return (

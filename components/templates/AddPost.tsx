@@ -1,12 +1,14 @@
 import React from "react";
-import { Box, HStack, useColorMode, Avatar } from "native-base";
+import { Box, HStack, useColorMode, Avatar, Button } from "native-base";
 import { useUserIcon, useUserInfo } from "../../hooks/useUserInfo";
 import { AddPostText } from "../organisms/AddPostText";
+import { useNavigation } from "@react-navigation/native";
 
 export const AddPost = () => {
   const { colorMode } = useColorMode();
   const usericon = useUserIcon();
   const user = useUserInfo();
+  const nav = useNavigation();
 
   return (
     <Box
@@ -30,7 +32,7 @@ export const AddPost = () => {
                   ml={1}
                 />
               </Box>
-              <AddPostText user={user} />
+              <AddPostText user={user} onSendFinish={() => nav.goBack()} />
             </HStack>
           </HStack>
         </Box>
