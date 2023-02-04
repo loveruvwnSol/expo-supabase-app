@@ -2,12 +2,13 @@ import { useEffect } from "react";
 import { supabase } from "../libs/supabaseClient";
 import { create } from "zustand";
 
-type Post = {
+export type Post = {
+  post_id: string;
   id: string;
   user_name: string;
   user_id: string;
-  timestamp: Date;
   text: string;
+  timestamp: Date;
 };
 
 type UsePostStoreType = {
@@ -29,9 +30,8 @@ export const usePost = () => {
   const getPostInfo = async () => {
     const { data } = await supabase
       .from("timeline")
-      .select("id,user_name,user_id,text,timestamp");
+      .select("post_id,id,user_name,user_id,text,timestamp");
     if (data) {
-      console.log(data);
       setPosts(data);
     }
   };
