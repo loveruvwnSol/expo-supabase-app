@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Box, HStack, Text, Divider, TextArea, Button } from "native-base";
+import {
+  Box,
+  HStack,
+  Text,
+  Divider,
+  TextArea,
+  Button,
+  useColorMode,
+} from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../libs/supabaseClient";
 import { Alert } from "react-native";
@@ -11,6 +19,7 @@ type AddPostText = {
 };
 
 export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
+  const { colorMode } = useColorMode();
   const [textAreaValue, setTextAreaValue] = useState("");
   const { getPostInfo } = usePost();
   const AddPostData = async () => {
@@ -62,7 +71,7 @@ export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
           onPress={AddPostData}
           w={24}
           h={10}
-          bg="blueGray.100"
+          bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
           borderWidth={1}
           borderColor="dodgerblue"
           borderRadius={50}
@@ -70,7 +79,10 @@ export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
           alignItems="center"
           _pressed={{ bg: "dodgerblue", color: "white" }}
         >
-          <Text color="black" fontWeight="thin">
+          <Text
+            color={colorMode === "dark" ? "white" : "black"}
+            fontWeight="thin"
+          >
             投稿する
           </Text>
         </Button>
