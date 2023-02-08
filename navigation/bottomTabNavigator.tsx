@@ -22,8 +22,8 @@ import {
   UserSettingsParamList,
 } from "../types";
 import { Box, Avatar, useColorModeValue, IconButton } from "native-base";
-import { UserDetailSetting } from "../components/templates/UserDetailSetting";
-import { OptionSetting } from "../components/templates/OptionSetting";
+// import { UserDetailSetting } from "../components/templates/UserDetailSetting";
+// import { OptionSetting } from "../components/templates/OptionSetting";
 import { NotificationsPage } from "../components/templates/NotificationsPage";
 import * as Notifications from "expo-notifications";
 import { useUserIcon, useUserInfo } from "../hooks/useUserInfo";
@@ -187,7 +187,7 @@ export function UserSettingsNavigator() {
             },
           }}
         />
-        <UserSettingsStack.Screen
+        {/* <UserSettingsStack.Screen
           name="UserDetailSetting"
           component={UserDetailSetting}
           options={{
@@ -204,7 +204,7 @@ export function UserSettingsNavigator() {
             headerShadowVisible: false,
             headerBackButtonMenuEnabled: false,
           }}
-        />
+        /> */}
       </UserSettingsStack.Group>
     </UserSettingsStack.Navigator>
   );
