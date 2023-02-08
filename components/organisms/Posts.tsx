@@ -37,12 +37,19 @@ export const Posts = () => {
   return (
     likedPostIds !== null && (
       <ScrollView w={["96", "full"]}>
+        {/* {posts.map(async (e, idx) => { */}
         {posts.map((e, idx) => {
           const { publicURL } = supabase.storage
             .from("avatars")
             .getPublicUrl(e.id + "_ICON/avatar");
 
           const isLiked = likedPostIds.includes(e.post_id);
+
+          // const { data } = await supabase
+          //   .from("profiles")
+          //   .select("user_name")
+          //   .eq("id", e.id);
+          // console.log(data);
 
           return (
             <Box
@@ -72,6 +79,7 @@ export const Posts = () => {
                         w={72}
                       >
                         <Text ml={2} fontSize={16}>
+                          {/* {data[0].user_name} */}
                           {e.user_name}
                         </Text>
                         <HStack alignItems="center" justifyContent="end">
