@@ -10,13 +10,14 @@ import {
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { usePost } from "../../hooks/useTlinfo";
+import { useGetUserInfoByPosts, usePost } from "../../hooks/useTlinfo";
 import { supabase } from "../../libs/supabaseClient";
 import { PostIcons } from "../molecules/PostIcons";
 
 export const Posts = () => {
   const { colorMode } = useColorMode();
   const { posts } = usePost();
+  const userInfos = useGetUserInfoByPosts(posts);
   const [likedPostIds, setLikedPostIds] = useState<string[] | null>([]);
 
   const callLikedPosts = () => {
@@ -37,7 +38,6 @@ export const Posts = () => {
   return (
     likedPostIds !== null && (
       <ScrollView w={["96", "full"]}>
-        {/* {posts.map(async (e, idx) => { */}
         {posts.map((e, idx) => {
           const { publicURL } = supabase.storage
             .from("avatars")
@@ -45,11 +45,8 @@ export const Posts = () => {
 
           const isLiked = likedPostIds.includes(e.post_id);
 
-          // const { data } = await supabase
-          //   .from("profiles")
-          //   .select("user_name")
-          //   .eq("id", e.id);
-          // console.log(data);
+          const data = userInfos.find((s) => s[0].id === e.id);
+          if (!data) return null;
 
           return (
             <Box
@@ -79,8 +76,7 @@ export const Posts = () => {
                         w={72}
                       >
                         <Text ml={2} fontSize={16}>
-                          {/* {data[0].user_name} */}
-                          {e.user_name}
+                          {data[0].user_name}
                         </Text>
                         <HStack alignItems="center" justifyContent="end">
                           <Text
@@ -104,7 +100,7 @@ export const Posts = () => {
                         opacity="0.5"
                         fontSize={12}
                       >
-                        {"@" + e.user_id}
+                        {"@" + data[0].user_id}
                       </Text>
                       <Box mt={2} ml={2} w={64}>
                         <Text fontWeight="thin">{e.text}</Text>

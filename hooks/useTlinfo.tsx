@@ -1,12 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../libs/supabaseClient";
 import { create } from "zustand";
 
 export type Post = {
   post_id: string;
   id: string;
-  user_name: string;
-  user_id: string;
   text: string;
   timestamp: Date;
 };
@@ -30,11 +28,38 @@ export const usePost = () => {
   const getPostInfo = async () => {
     const { data } = await supabase
       .from("timeline")
-      .select("post_id,id,user_name,user_id,text,timestamp");
+      .select("post_id,id,text,timestamp");
     if (data) {
       setPosts(data);
     }
   };
 
   return { posts, getPostInfo };
+};
+type UserInfo = {
+  id: string;
+  user_id: string;
+  user_name: string;
+};
+
+export const useGetUserInfoByPosts = (posts: Post[]) => {
+  const [userInfos, setUserInfos] = useState<UserInfo[][]>([]);
+  useEffect(() => {
+    Promise.all(
+      posts.map(async (e) => {
+        return await supabase
+          .from("profiles")
+          .select("id,user_name,user_id")
+          .eq("id", e.id)
+          .then((res) => {
+            // data = res.data;
+            return res.data;
+          });
+      })
+    ).then((infos: any) => {
+      console.log(infos);
+      setUserInfos(infos as UserInfo[][]);
+    });
+  }, [posts]);
+  return userInfos;
 };
