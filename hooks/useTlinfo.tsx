@@ -52,12 +52,10 @@ export const useGetUserInfoByPosts = (posts: Post[]) => {
           .select("id,user_name,user_id")
           .eq("id", e.id)
           .then((res) => {
-            // data = res.data;
             return res.data;
           });
       })
     ).then((infos: any) => {
-      console.log(infos);
       setUserInfos(infos as UserInfo[][]);
     });
   }, [posts]);
