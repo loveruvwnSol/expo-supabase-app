@@ -7,6 +7,7 @@ import {
   useColorMode,
   Avatar,
   Divider,
+  Link,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -14,7 +15,11 @@ import { useGetUserInfoByPosts, usePost } from "../../hooks/useTlinfo";
 import { supabase } from "../../libs/supabaseClient";
 import { PostIcons } from "../molecules/PostIcons";
 
-export const Posts = () => {
+type PostsProps = {
+  navigation: any;
+};
+
+export const Posts: React.FC<PostsProps> = ({ navigation }) => {
   const { colorMode } = useColorMode();
   const { posts } = usePost();
   const userInfos = useGetUserInfoByPosts(posts);
@@ -34,23 +39,37 @@ export const Posts = () => {
   useEffect(() => {
     callLikedPosts();
   }, []);
+  if (!likedPostIds) return null;
 
   return (
-    likedPostIds !== null && (
-      <ScrollView w={["96", "full"]}>
-        {posts.map((e, idx) => {
-          const { publicURL } = supabase.storage
-            .from("avatars")
-            .getPublicUrl(e.id + "_ICON/avatar");
+    <ScrollView w={["96", "full"]}>
+      {posts.map((e, idx) => {
+        const { publicURL } = supabase.storage
+          .from("avatars")
+          .getPublicUrl(e.id + "_ICON/avatar");
 
-          const isLiked = likedPostIds.includes(e.post_id);
+        const isLiked = likedPostIds.includes(e.post_id);
 
-          const data = userInfos.find((s) => s[0].id === e.id);
-          if (!data) return null;
+        const data = userInfos.find((s) => s[0].id === e.id);
+        if (!data) return null;
 
-          return (
+        return (
+          <Link
+            key={idx}
+            onPress={() =>
+              navigation.navigate("PostDetails", {
+                post_id: e.post_id,
+                user_name: data[0].user_name,
+                user_id: data[0].user_id,
+                user_icon: publicURL,
+                text: e.text,
+                timestamp: e.timestamp,
+                isLiked: isLiked,
+                callLikedPosts: callLikedPosts,
+              })
+            }
+          >
             <Box
-              key={idx}
               bg={colorMode === "dark" ? "black" : "white"}
               w={96}
               justifyContent="space-between"
@@ -116,9 +135,9 @@ export const Posts = () => {
               </Box>
               <Divider opacity={0.5} />
             </Box>
-          );
-        })}
-      </ScrollView>
-    )
+          </Link>
+        );
+      })}
+    </ScrollView>
   );
 };
