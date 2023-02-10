@@ -41,6 +41,16 @@ export type UserSettingsParamList = {
 
 export type TimelineParamList = {
   Timeline: undefined;
+  PostDetails: {
+    post_id: string;
+    user_name: string;
+    user_id: string;
+    user_icon: string | undefined;
+    text: string;
+    timestamp: Date;
+    isLiked: boolean;
+    callLikedPosts: () => void;
+  };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

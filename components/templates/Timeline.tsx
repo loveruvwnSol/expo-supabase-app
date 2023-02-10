@@ -1,8 +1,12 @@
 import React from "react";
 import { Box, useColorMode } from "native-base";
 import { Posts } from "../organisms/Posts";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { TimelineParamList } from "../../types";
 
-export const Timeline = () => {
+type TimelineStackscreenProps = NativeStackScreenProps<TimelineParamList>;
+
+export const Timeline = ({ navigation }: TimelineStackscreenProps) => {
   const { colorMode } = useColorMode();
   return (
     <Box
@@ -11,7 +15,7 @@ export const Timeline = () => {
       h="full"
       alignItems="center"
     >
-      <Posts />
+      <Posts navigation={navigation} />
     </Box>
   );
 };

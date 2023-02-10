@@ -29,6 +29,7 @@ import * as Notifications from "expo-notifications";
 import { useUserIcon, useUserInfo } from "../hooks/useUserInfo";
 import { Settings } from "../components/templates/Settings";
 import { Timeline } from "../components/templates/Timeline";
+import { PostDetails } from "../components/templates/PostDetails";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -96,7 +97,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="TabTwo"
-        component={Timeline}
+        component={TimelineNavigator}
         options={({ navigation }: RootTabScreenProps<"TabTwo">) => ({
           title: "みんなの投稿",
           headerTitleStyle: {
@@ -220,7 +221,16 @@ export function TimelineNavigator() {
           animation: "simple_push",
         }}
       >
-        <TimelineStack.Screen name="Timeline" component={Timeline} />
+        <TimelineStack.Screen
+          name="Timeline"
+          component={Timeline}
+          options={{ headerShown: false }}
+        />
+        <TimelineStack.Screen
+          name="PostDetails"
+          component={PostDetails}
+          options={{ headerShown: false }}
+        />
       </TimelineStack.Group>
     </TimelineStack.Navigator>
   );
