@@ -10,7 +10,10 @@ type TimelineStackscreenProps = NativeStackScreenProps<
   "PostDetails"
 >;
 
-export const PostDetails = ({ route }: TimelineStackscreenProps) => {
+export const PostDetails = ({
+  navigation,
+  route,
+}: TimelineStackscreenProps) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -22,6 +25,7 @@ export const PostDetails = ({ route }: TimelineStackscreenProps) => {
         alignItems="center"
       >
         <PostDetailsTop
+          navigation={navigation}
           post_id={route.params.post_id}
           user_name={route.params.user_name}
           user_id={route.params.user_id}
