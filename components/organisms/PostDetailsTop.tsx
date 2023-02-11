@@ -12,6 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 
 type PostDetailsTopProps = {
+  navigation: any;
   post_id: string;
   user_name: string;
   user_id: string;
@@ -21,6 +22,7 @@ type PostDetailsTopProps = {
 };
 
 export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
+  navigation,
   post_id,
   user_name,
   user_id,
@@ -77,6 +79,11 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
               </Box>
               <Box mt={3} alignItems="flex-end">
                 <Button
+                  onPress={() =>
+                    navigation.navigate("AddReply", {
+                      post_id: post_id,
+                    })
+                  }
                   w={24}
                   h={10}
                   bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
