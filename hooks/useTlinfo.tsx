@@ -9,9 +9,22 @@ export type Post = {
   timestamp: Date;
 };
 
+export type Reply = {
+  reply_id: string;
+  post_id: string;
+  id: string;
+  text: string;
+  timestamp: Date;
+};
+
 type UsePostStoreType = {
   posts: Post[];
   setPosts: (newPosts: Post[]) => void;
+};
+
+type UseReplyStoreType = {
+  replies: Reply[];
+  setReplies: (newReplies: Reply[]) => void;
 };
 
 export const usePostStore = create<UsePostStoreType>((set) => ({
@@ -36,6 +49,32 @@ export const usePost = () => {
 
   return { posts, getPostInfo };
 };
+
+export const useReplyStore = create<UseReplyStoreType>((set) => ({
+  replies: [],
+  setReplies: (newReplies) => set(() => ({ replies: [...newReplies] })),
+}));
+
+export const useReply = () => {
+  const setReplies = useReplyStore((s) => s.setReplies);
+  const replies = useReplyStore((s) => s.replies);
+  useEffect(() => {
+    getReplyInfo();
+  }, []);
+  const getReplyInfo = async () => {
+    const { data } = await supabase
+      .from("replies")
+      .select("reply_id,post_id,id,text,timestamp");
+    // .eq("post_id", data[0].post_id);
+    if (data) {
+      setReplies(data);
+      // console.log(data);
+    }
+  };
+
+  return { replies, getReplyInfo };
+};
+
 type UserInfo = {
   id: string;
   user_id: string;
@@ -59,5 +98,25 @@ export const useGetUserInfoByPosts = (posts: Post[]) => {
       setUserInfos(infos as UserInfo[][]);
     });
   }, [posts]);
+  return userInfos;
+};
+
+export const useGetUserInfoByReplies = (replies: Reply[]) => {
+  const [userInfos, setUserInfos] = useState<UserInfo[][]>([]);
+  useEffect(() => {
+    Promise.all(
+      replies.map(async (e) => {
+        return await supabase
+          .from("profiles")
+          .select("id,user_name,user_id")
+          .eq("id", e.id)
+          .then((res) => {
+            return res.data;
+          });
+      })
+    ).then((infos: any) => {
+      setUserInfos(infos as UserInfo[][]);
+    });
+  }, [replies]);
   return userInfos;
 };
