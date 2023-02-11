@@ -64,8 +64,6 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
                 user_icon: publicURL,
                 text: e.text,
                 timestamp: e.timestamp,
-                isLiked: isLiked,
-                callLikedPosts: callLikedPosts,
               })
             }
           >

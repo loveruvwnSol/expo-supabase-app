@@ -48,8 +48,6 @@ export type TimelineParamList = {
     user_icon: string | undefined;
     text: string;
     timestamp: Date;
-    isLiked: boolean;
-    callLikedPosts: () => void;
   };
 };
 

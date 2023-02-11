@@ -1,8 +1,15 @@
-import React, { useEffect } from "react";
-import { Box, HStack, Text, useColorMode, Avatar, Divider } from "native-base";
+import React from "react";
+import {
+  Box,
+  HStack,
+  Text,
+  useColorMode,
+  Avatar,
+  Divider,
+  Button,
+} from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
-import { PostIcons } from "../molecules/PostIcons";
 
 type PostDetailsTopProps = {
   post_id: string;
@@ -11,8 +18,6 @@ type PostDetailsTopProps = {
   user_icon: string | undefined;
   text: string;
   timestamp: Date;
-  isLiked: boolean;
-  callLikedPosts: () => void;
 };
 
 export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
@@ -22,14 +27,8 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
   user_icon,
   text,
   timestamp,
-  isLiked,
-  callLikedPosts,
 }) => {
   const { colorMode } = useColorMode();
-
-  useEffect(() => {
-    callLikedPosts;
-  }, []);
 
   return (
     <Box
@@ -50,6 +49,13 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
                 size="xs"
                 ml={1}
               />
+              <Divider
+                h={10}
+                opacity={0.5}
+                orientation="vertical"
+                ml={6}
+                mt={6}
+              />
             </Box>
             <Box>
               <HStack alignItems="center" justifyContent="space-between" w={72}>
@@ -69,16 +75,31 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
               <Box mt={2} ml={2} w={64}>
                 <Text fontWeight="thin">{text}</Text>
               </Box>
-              <PostIcons
-                post_id={post_id}
-                toggle={isLiked}
-                callLikedPosts={callLikedPosts}
-              />
+              <Box mt={3} alignItems="flex-end">
+                <Button
+                  w={24}
+                  h={10}
+                  bg={colorMode === "dark" ? "coolGray.900" : "blueGray.100"}
+                  borderWidth={1}
+                  borderColor="dodgerblue"
+                  borderRadius={50}
+                  color="black"
+                  alignItems="center"
+                  _pressed={{ bg: "dodgerblue", color: "white" }}
+                >
+                  <Text
+                    color={colorMode === "dark" ? "white" : "black"}
+                    fontWeight="thin"
+                  >
+                    返信する
+                  </Text>
+                </Button>
+              </Box>
             </Box>
           </HStack>
         </HStack>
       </Box>
-      <Divider opacity={0.5} />
+      <Divider opacity={0.5} w={2} />
     </Box>
   );
 };
