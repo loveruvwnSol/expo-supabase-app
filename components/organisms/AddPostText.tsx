@@ -29,8 +29,6 @@ export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
         .from("timeline")
         .insert({
           id: user && user.id,
-          user_name: user && user.user_name,
-          user_id: user && user.user_id,
           text: textAreaValue,
         })
         .then(({ error }) => {
