@@ -30,6 +30,7 @@ import { useUserIcon, useUserInfo } from "../hooks/useUserInfo";
 import { Settings } from "../components/templates/Settings";
 import { Timeline } from "../components/templates/Timeline";
 import { PostDetails } from "../components/templates/PostDetails";
+import { AddReply } from "../components/templates/AddReply";
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -230,6 +231,11 @@ export function TimelineNavigator() {
           name="PostDetails"
           component={PostDetails}
           options={{ headerShown: false }}
+        />
+        <TimelineStack.Screen
+          name="AddReply"
+          component={AddReply}
+          options={{ headerShown: false, animation: "slide_from_bottom" }}
         />
       </TimelineStack.Group>
     </TimelineStack.Navigator>

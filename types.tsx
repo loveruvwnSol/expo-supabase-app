@@ -49,6 +49,9 @@ export type TimelineParamList = {
     text: string;
     timestamp: Date;
   };
+  AddReply: {
+    post_id: string;
+  };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
