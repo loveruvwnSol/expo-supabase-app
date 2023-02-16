@@ -17,6 +17,7 @@ export const PostIcons: React.FC<PostIconsProps> = ({
 }) => {
   const [toggleIcon, setToggleIcon] = useState(toggle);
   const [likesColumn, setLikesColumn] = useState<number>();
+  const [repliesColumn, setRepliesColumn] = useState<number>();
   useEffect(() => {
     setToggleIcon(toggle);
     const getLikesColumn = async () => {
@@ -28,7 +29,17 @@ export const PostIcons: React.FC<PostIconsProps> = ({
         setLikesColumn(data.length);
       }
     };
+    const getRepliesColumn = async () => {
+      const { data } = await supabase
+        .from("replies")
+        .select("reply_id")
+        .eq("post_id", post_id);
+      if (data) {
+        setRepliesColumn(data.length);
+      }
+    };
     getLikesColumn();
+    getRepliesColumn();
   }, [toggle]);
 
   const onPressLike = async () => {
@@ -69,7 +80,7 @@ export const PostIcons: React.FC<PostIconsProps> = ({
       <HStack alignItems="center">
         <Ionicons name="chatbubble-outline" color="gray" size={16} />
         <Text ml={2} opacity={0.5}>
-          0
+          {repliesColumn}
         </Text>
       </HStack>
       <HStack alignItems="center" ml={6}>
