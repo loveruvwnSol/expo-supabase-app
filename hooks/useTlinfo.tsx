@@ -55,7 +55,7 @@ export const useReplyStore = create<UseReplyStoreType>((set) => ({
   setReplies: (newReplies) => set(() => ({ replies: [...newReplies] })),
 }));
 
-export const useReply = () => {
+export const useReply = (post_id: string) => {
   const setReplies = useReplyStore((s) => s.setReplies);
   const replies = useReplyStore((s) => s.replies);
   useEffect(() => {
@@ -64,8 +64,8 @@ export const useReply = () => {
   const getReplyInfo = async () => {
     const { data } = await supabase
       .from("replies")
-      .select("reply_id,post_id,id,text,timestamp");
-    // .eq("post_id", data[0].post_id);
+      .select("reply_id,post_id,id,text,timestamp")
+      .eq("post_id", post_id);
     if (data) {
       setReplies(data);
       // console.log(data);

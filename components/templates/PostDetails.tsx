@@ -33,7 +33,7 @@ export const PostDetails = ({
           text={route.params.text}
           timestamp={route.params.timestamp}
         />
-        <Replies />
+        <Replies post_id={route.params.post_id} />
       </Box>
     </ScrollView>
   );

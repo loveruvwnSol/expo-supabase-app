@@ -5,9 +5,13 @@ import dayjs from "dayjs";
 import { useGetUserInfoByReplies, useReply } from "../../hooks/useTlinfo";
 import { supabase } from "../../libs/supabaseClient";
 
-export const Replies = () => {
+type RepliesProps = {
+  post_id: string;
+};
+
+export const Replies: React.FC<RepliesProps> = ({ post_id }) => {
   const { colorMode } = useColorMode();
-  const { replies } = useReply();
+  const { replies } = useReply(post_id);
   const userInfos = useGetUserInfoByReplies(replies);
 
   return (
