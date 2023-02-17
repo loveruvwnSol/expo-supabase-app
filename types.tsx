@@ -49,6 +49,7 @@ export type TimelineParamList = {
     user_gender: string;
     user_country: string;
     user_language: string;
+    selfIntro: string;
     text: string;
     timestamp: Date;
   };
@@ -63,6 +64,7 @@ export type TimelineParamList = {
     user_gender: string;
     user_country: string;
     user_language: string;
+    selfIntro: string;
   };
 };
 
