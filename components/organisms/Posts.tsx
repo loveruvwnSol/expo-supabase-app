@@ -65,6 +65,7 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
                 user_gender: data[0].user_gender,
                 user_country: data[0].user_country,
                 user_language: data[0].user_language,
+                selfIntro: data[0].selfIntro,
                 text: e.text,
                 timestamp: e.timestamp,
               })
@@ -88,6 +89,7 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
                           user_gender: data[0].user_gender,
                           user_country: data[0].user_country,
                           user_language: data[0].user_language,
+                          selfIntro: data[0].selfIntro,
                         })
                       }
                     >

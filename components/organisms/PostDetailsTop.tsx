@@ -21,6 +21,7 @@ type PostDetailsTopProps = {
   user_gender: string;
   user_country: string;
   user_language: string;
+  selfIntro: string;
   text: string;
   timestamp: Date;
 };
@@ -34,6 +35,7 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
   user_gender,
   user_country,
   user_language,
+  selfIntro,
   text,
   timestamp,
 }) => {
@@ -58,6 +60,7 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
                   user_gender: user_gender,
                   user_country: user_country,
                   user_language: user_language,
+                  selfIntro: selfIntro,
                 })
               }
             >

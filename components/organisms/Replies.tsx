@@ -53,6 +53,7 @@ export const Replies: React.FC<RepliesProps> = ({ navigation, post_id }) => {
                         user_gender: data[0].user_gender,
                         user_country: data[0].user_country,
                         user_language: data[0].user_language,
+                        selfIntro: data[0].selfIntro,
                       })
                     }
                   >

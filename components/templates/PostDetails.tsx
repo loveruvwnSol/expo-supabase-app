@@ -33,6 +33,7 @@ export const PostDetails = ({
           user_gender={route.params.user_gender}
           user_country={route.params.user_country}
           user_language={route.params.user_language}
+          selfIntro={route.params.selfIntro}
           text={route.params.text}
           timestamp={route.params.timestamp}
         />
