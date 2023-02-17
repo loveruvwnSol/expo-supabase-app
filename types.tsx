@@ -46,11 +46,23 @@ export type TimelineParamList = {
     user_name: string;
     user_id: string;
     user_icon: string | undefined;
+    user_gender: string;
+    user_country: string;
+    user_language: string;
     text: string;
     timestamp: Date;
   };
   AddReply: {
     post_id: string;
+  };
+  TimelineUserInfos: {
+    id: string;
+    user_name: string;
+    user_id: string;
+    user_icon: string | undefined;
+    user_gender: string;
+    user_country: string;
+    user_language: string;
   };
 };
 

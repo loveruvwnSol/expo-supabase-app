@@ -1,15 +1,24 @@
 import React from "react";
-import { Box, HStack, Text, useColorMode, Avatar, Divider } from "native-base";
+import {
+  Box,
+  HStack,
+  Text,
+  useColorMode,
+  Avatar,
+  Divider,
+  Link,
+} from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
 import { useGetUserInfoByReplies, useReply } from "../../hooks/useTlinfo";
 import { supabase } from "../../libs/supabaseClient";
 
 type RepliesProps = {
+  navigation: any;
   post_id: string;
 };
 
-export const Replies: React.FC<RepliesProps> = ({ post_id }) => {
+export const Replies: React.FC<RepliesProps> = ({ navigation, post_id }) => {
   const { colorMode } = useColorMode();
   const { replies } = useReply(post_id);
   const userInfos = useGetUserInfoByReplies(replies);
@@ -34,17 +43,31 @@ export const Replies: React.FC<RepliesProps> = ({ post_id }) => {
             <Box m={4}>
               <HStack alignItems="center" justifyContent="space-between">
                 <HStack>
-                  <Box mt={1}>
-                    <Avatar
-                      w={12}
-                      h={12}
-                      borderWidth={0.5}
-                      borderColor="gray.500"
-                      source={{ uri: publicURL ?? "" }}
-                      size="xs"
-                      ml={1}
-                    />
-                  </Box>
+                  <Link
+                    onPress={() =>
+                      navigation.navigate("TimelineUserInfos", {
+                        id: data[0].id,
+                        user_name: data[0].user_name,
+                        user_id: data[0].user_id,
+                        user_icon: publicURL,
+                        user_gender: data[0].user_gender,
+                        user_country: data[0].user_country,
+                        user_language: data[0].user_language,
+                      })
+                    }
+                  >
+                    <Box mt={1}>
+                      <Avatar
+                        w={12}
+                        h={12}
+                        borderWidth={0.5}
+                        borderColor="gray.500"
+                        source={{ uri: publicURL ?? "" }}
+                        size="xs"
+                        ml={1}
+                      />
+                    </Box>
+                  </Link>
                   <Box>
                     <HStack
                       alignItems="center"

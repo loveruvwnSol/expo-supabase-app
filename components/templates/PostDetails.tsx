@@ -30,10 +30,13 @@ export const PostDetails = ({
           user_name={route.params.user_name}
           user_id={route.params.user_id}
           user_icon={route.params.user_icon}
+          user_gender={route.params.user_gender}
+          user_country={route.params.user_country}
+          user_language={route.params.user_language}
           text={route.params.text}
           timestamp={route.params.timestamp}
         />
-        <Replies post_id={route.params.post_id} />
+        <Replies navigation={navigation} post_id={route.params.post_id} />
       </Box>
     </ScrollView>
   );

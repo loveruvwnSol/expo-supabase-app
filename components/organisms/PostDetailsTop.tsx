@@ -7,6 +7,7 @@ import {
   Avatar,
   Divider,
   Button,
+  Link,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -17,6 +18,9 @@ type PostDetailsTopProps = {
   user_name: string;
   user_id: string;
   user_icon: string | undefined;
+  user_gender: string;
+  user_country: string;
+  user_language: string;
   text: string;
   timestamp: Date;
 };
@@ -27,6 +31,9 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
   user_name,
   user_id,
   user_icon,
+  user_gender,
+  user_country,
+  user_language,
   text,
   timestamp,
 }) => {
@@ -41,24 +48,38 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
       <Box m={4}>
         <HStack alignItems="center" justifyContent="space-between">
           <HStack>
-            <Box mt={1}>
-              <Avatar
-                w={12}
-                h={12}
-                borderWidth={0.5}
-                borderColor="gray.500"
-                source={{ uri: user_icon }}
-                size="xs"
-                ml={1}
-              />
-              <Divider
-                h={10}
-                opacity={0.5}
-                orientation="vertical"
-                ml={6}
-                mt={6}
-              />
-            </Box>
+            <Link
+              onPress={() =>
+                navigation.navigate("TimelineUserInfos", {
+                  id: post_id,
+                  user_name: user_name,
+                  user_id: user_id,
+                  user_icon: user_icon,
+                  user_gender: user_gender,
+                  user_country: user_country,
+                  user_language: user_language,
+                })
+              }
+            >
+              <Box mt={1}>
+                <Avatar
+                  w={12}
+                  h={12}
+                  borderWidth={0.5}
+                  borderColor="gray.500"
+                  source={{ uri: user_icon }}
+                  size="xs"
+                  ml={1}
+                />
+                <Divider
+                  h={10}
+                  opacity={0.5}
+                  orientation="vertical"
+                  ml={6}
+                  mt={6}
+                />
+              </Box>
+            </Link>
             <Box>
               <HStack alignItems="center" justifyContent="space-between" w={72}>
                 <Text ml={2} fontSize={16}>
