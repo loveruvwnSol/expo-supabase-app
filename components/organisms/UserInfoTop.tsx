@@ -13,7 +13,7 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({
   navigation,
 }) => {
   return (
-    <Box mb={10}>
+    <Box mb={5}>
       <HStack alignItems="center">
         <Box borderWidth={1} borderRadius={100} borderColor="gray.500" mr={5}>
           <Avatar w={32} h={32} source={{ uri: usericon }} size="xs">
@@ -42,6 +42,11 @@ export const UserInfoTop: React.FC<UserInfoTopProps> = ({
           </Button>
         </Box>
       </HStack>
+      <Box mt={5}>
+        <Text fontSize={14} fontWeight="thin">
+          {user.selfIntro}
+        </Text>
+      </Box>
     </Box>
   );
 };

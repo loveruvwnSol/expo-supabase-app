@@ -5,12 +5,14 @@ type TimelineUserInfosTopProps = {
   user_name: string;
   user_id: string;
   user_icon: string | undefined;
+  selfIntro: string;
 };
 
 export const TimelineUserInfosTop: React.FC<TimelineUserInfosTopProps> = ({
   user_name,
   user_id,
   user_icon,
+  selfIntro,
 }) => {
   return (
     <Box mb={10}>
@@ -35,6 +37,11 @@ export const TimelineUserInfosTop: React.FC<TimelineUserInfosTopProps> = ({
           </Text>
         </Box>
       </HStack>
+      <Box mt={5}>
+        <Text fontSize={14} fontWeight="thin">
+          {selfIntro}
+        </Text>
+      </Box>
     </Box>
   );
 };
