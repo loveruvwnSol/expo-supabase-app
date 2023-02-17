@@ -6,6 +6,7 @@ import {
   Switch,
   IconButton,
   useColorMode,
+  Divider,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../libs/supabaseClient";
@@ -56,6 +57,9 @@ export const UserInfoList: React.FC<UserInfoListProps> = ({
 
   return (
     <Box w={"xs"}>
+      <Box ml={4} mr={5}>
+        <Divider w={72} />
+      </Box>
       <Box mt={4} ml={4} mr={5}>
         <Box mb={5}>
           <HStack justifyContent="space-between" alignItems="center">
