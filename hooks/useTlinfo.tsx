@@ -68,7 +68,6 @@ export const useReply = (post_id: string) => {
       .eq("post_id", post_id);
     if (data) {
       setReplies(data);
-      // console.log(data);
     }
   };
 
@@ -76,6 +75,7 @@ export const useReply = (post_id: string) => {
 };
 
 type UserInfo = {
+  [x: string]: any;
   id: string;
   user_id: string;
   user_name: string;
@@ -88,7 +88,7 @@ export const useGetUserInfoByPosts = (posts: Post[]) => {
       posts.map(async (e) => {
         return await supabase
           .from("profiles")
-          .select("id,user_name,user_id")
+          .select("id,user_name,user_id,user_gender,user_country,user_language")
           .eq("id", e.id)
           .then((res) => {
             return res.data;
@@ -108,7 +108,7 @@ export const useGetUserInfoByReplies = (replies: Reply[]) => {
       replies.map(async (e) => {
         return await supabase
           .from("profiles")
-          .select("id,user_name,user_id")
+          .select("id,user_name,user_id,user_gender,user_country,user_language")
           .eq("id", e.id)
           .then((res) => {
             return res.data;
