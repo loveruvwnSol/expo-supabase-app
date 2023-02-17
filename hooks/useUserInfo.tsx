@@ -9,7 +9,7 @@ export const useUserInfo = () => {
       const { data: profile } = await supabase
         .from("profiles")
         .select(
-          "id,user_id, user_email, user_name, user_gender, user_country, user_language"
+          "id,user_id, user_email, user_name, user_gender, user_country, user_language, selfIntro"
         )
         .eq("id", supabase.auth.user()?.id);
       if (profile) {

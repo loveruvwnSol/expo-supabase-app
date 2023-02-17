@@ -88,7 +88,9 @@ export const useGetUserInfoByPosts = (posts: Post[]) => {
       posts.map(async (e) => {
         return await supabase
           .from("profiles")
-          .select("id,user_name,user_id,user_gender,user_country,user_language")
+          .select(
+            "id,user_name,user_id,user_gender,user_country,user_language,selfIntro"
+          )
           .eq("id", e.id)
           .then((res) => {
             return res.data;
@@ -108,7 +110,9 @@ export const useGetUserInfoByReplies = (replies: Reply[]) => {
       replies.map(async (e) => {
         return await supabase
           .from("profiles")
-          .select("id,user_name,user_id,user_gender,user_country,user_language")
+          .select(
+            "id,user_name,user_id,user_gender,user_country,user_language,selfIntro"
+          )
           .eq("id", e.id)
           .then((res) => {
             return res.data;
