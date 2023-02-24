@@ -11,7 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { supabase } from "../../libs/supabaseClient";
 import { Alert } from "react-native";
-import { usePost } from "../../hooks/useTlinfo";
+import { usePostStore, useReply } from "../../hooks/useTlinfo";
 
 type AddReplyTextProps = {
   user: any;
@@ -22,13 +22,13 @@ type AddReplyTextProps = {
 
 export const AddReplyText: React.FC<AddReplyTextProps> = ({
   user,
-  navigation,
   post_id,
   onSendFinish,
 }) => {
   const { colorMode } = useColorMode();
   const [textAreaValue, setTextAreaValue] = useState("");
-  const { getPostInfo } = usePost();
+  const { getReplyInfo } = useReply(post_id);
+  const { update } = usePostStore();
   const AddPostData = async () => {
     if (!textAreaValue || !textAreaValue.match(/\S/g)) return;
     if (textAreaValue.length >= 1) {
@@ -43,10 +43,11 @@ export const AddReplyText: React.FC<AddReplyTextProps> = ({
           if (error) Alert.alert(error.message);
           Alert.alert("返信が完了しました");
           setTextAreaValue("");
-          getPostInfo();
+          getReplyInfo();
           onSendFinish();
         });
     }
+    update();
   };
 
   return (
