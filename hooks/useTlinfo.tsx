@@ -7,6 +7,7 @@ export type Post = {
   id: string;
   text: string;
   timestamp: Date;
+  post_image_id: string;
 };
 
 export type Reply = {
@@ -20,16 +21,22 @@ export type Reply = {
 type UsePostStoreType = {
   posts: Post[];
   setPosts: (newPosts: Post[]) => void;
+  update: () => void;
 };
 
 type UseReplyStoreType = {
   replies: Reply[];
   setReplies: (newReplies: Reply[]) => void;
+  update: () => void;
 };
 
-export const usePostStore = create<UsePostStoreType>((set) => ({
+export const usePostStore = create<UsePostStoreType>((set, get) => ({
   posts: [],
   setPosts: (newPosts) => set(() => ({ posts: [...newPosts] })),
+  update: () => {
+    const { posts } = get();
+    set({ posts: [...posts] });
+  },
 }));
 
 export const usePost = () => {
@@ -41,7 +48,7 @@ export const usePost = () => {
   const getPostInfo = async () => {
     const { data } = await supabase
       .from("timeline")
-      .select("post_id,id,text,timestamp");
+      .select("post_id,id,text,timestamp,post_image_id");
     if (data) {
       setPosts(data);
     }
@@ -50,9 +57,13 @@ export const usePost = () => {
   return { posts, getPostInfo };
 };
 
-export const useReplyStore = create<UseReplyStoreType>((set) => ({
+export const useReplyStore = create<UseReplyStoreType>((set, get) => ({
   replies: [],
   setReplies: (newReplies) => set(() => ({ replies: [...newReplies] })),
+  update: () => {
+    const { replies } = get();
+    set({ replies: [...replies] });
+  },
 }));
 
 export const useReply = (post_id: string) => {
@@ -66,6 +77,7 @@ export const useReply = (post_id: string) => {
       .from("replies")
       .select("reply_id,post_id,id,text,timestamp")
       .eq("post_id", post_id);
+    console.log({ data });
     if (data) {
       setReplies(data);
     }
