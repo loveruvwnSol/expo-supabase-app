@@ -75,6 +75,7 @@ export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
         .from("timeline")
         .insert({
           id: user && user.id,
+          text: textAreaValue,
           post_image_id: result,
         })
         .then(({ error }) => {
@@ -151,26 +152,22 @@ export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
           autoCompleteType={undefined}
         />
       </Box>
-      <Box justifyContent="center" alignItems="center">
-        {image && (
-          <Box>
-            <Box position="absolute">
-              <IconButton
-                top={24}
-                icon={<Ionicons name="close-circle-outline" size={24} />}
-              />
-            </Box>
-            <Image
-              mb={3}
-              w={72}
-              h={72}
-              source={{ uri: image }}
-              alt="postImage"
-              borderRadius={15}
-            />
-          </Box>
-        )}
-      </Box>
+      {image && (
+        <Box alignItems="left">
+          <IconButton
+            onPress={() => setImage(undefined)}
+            icon={<Ionicons name="close-circle-outline" size={24} />}
+          />
+          <Image
+            mb={3}
+            w={72}
+            h={72}
+            source={{ uri: image }}
+            alt="postImage"
+            borderRadius={15}
+          />
+        </Box>
+      )}
       <Divider />
       <HStack mt={2} alignItems="center" justifyContent="space-between">
         <IconButton
