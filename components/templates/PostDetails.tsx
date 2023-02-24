@@ -36,6 +36,7 @@ export const PostDetails = ({
           selfIntro={route.params.selfIntro}
           text={route.params.text}
           timestamp={route.params.timestamp}
+          post_image={route.params.post_image}
         />
         <Replies navigation={navigation} post_id={route.params.post_id} />
       </Box>
