@@ -8,6 +8,7 @@ import {
   Avatar,
   Divider,
   Link,
+  Image,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -44,7 +45,7 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
   return (
     <ScrollView w={["96", "full"]}>
       {posts.map((e, idx) => {
-        const { publicURL } = supabase.storage
+        const { publicURL: user_icon } = supabase.storage
           .from("avatars")
           .getPublicUrl(e.id + "_ICON/avatar");
 
@@ -52,6 +53,14 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
 
         const data = userInfos.find((s) => s[0].id === e.id);
         if (!data) return null;
+
+        let post_image = null;
+        if (e.post_image_id) {
+          const { publicURL } = supabase.storage
+            .from("post-images")
+            .getPublicUrl(data[0].id + "/" + e.post_image_id);
+          post_image = publicURL;
+        }
 
         return (
           <Link
@@ -61,7 +70,7 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
                 post_id: e.post_id,
                 user_name: data[0].user_name,
                 user_id: data[0].user_id,
-                user_icon: publicURL,
+                user_icon: user_icon,
                 user_gender: data[0].user_gender,
                 user_country: data[0].user_country,
                 user_language: data[0].user_language,
@@ -79,32 +88,32 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
               <Box m={4}>
                 <HStack alignItems="center" justifyContent="space-between">
                   <HStack>
-                    <Link
-                      onPress={() =>
-                        navigation.navigate("TimelineUserInfos", {
-                          id: data[0].id,
-                          user_name: data[0].user_name,
-                          user_id: data[0].user_id,
-                          user_icon: publicURL,
-                          user_gender: data[0].user_gender,
-                          user_country: data[0].user_country,
-                          user_language: data[0].user_language,
-                          selfIntro: data[0].selfIntro,
-                        })
-                      }
-                    >
-                      <Box mt={1}>
+                    <Box mt={1}>
+                      <Link
+                        onPress={() =>
+                          navigation.navigate("TimelineUserInfos", {
+                            id: data[0].id,
+                            user_name: data[0].user_name,
+                            user_id: data[0].user_id,
+                            user_icon: user_icon,
+                            user_gender: data[0].user_gender,
+                            user_country: data[0].user_country,
+                            user_language: data[0].user_language,
+                            selfIntro: data[0].selfIntro,
+                          })
+                        }
+                      >
                         <Avatar
                           w={12}
                           h={12}
                           borderWidth={0.5}
                           borderColor="gray.500"
-                          source={{ uri: publicURL ?? "" }}
+                          source={{ uri: user_icon ?? "" }}
                           size="xs"
                           ml={1}
                         />
-                      </Box>
-                    </Link>
+                      </Link>
+                    </Box>
                     <Box>
                       <HStack
                         alignItems="center"
@@ -140,6 +149,18 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
                       </Text>
                       <Box mt={2} ml={2} w={64}>
                         <Text fontWeight="thin">{e.text}</Text>
+                      </Box>
+                      <Box justifyContent="center" alignItems="center">
+                        {post_image && (
+                          <Image
+                            w={72}
+                            mt={4}
+                            h={72}
+                            source={{ uri: post_image ?? "" }}
+                            alt=""
+                            borderRadius={15}
+                          />
+                        )}
                       </Box>
                       <PostIcons
                         post_id={e.post_id}
