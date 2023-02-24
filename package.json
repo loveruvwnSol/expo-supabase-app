@@ -38,6 +38,7 @@
     "expo-updates": "~0.14.7",
     "expo-web-browser": "~11.0.0",
     "git": "^0.1.5",
+    "nanoid": "^4.0.1",
     "native-base": "^3.4.17",
     "react": "^18.2.0",
     "react-dom": "18.0.0",
