@@ -52,6 +52,7 @@ export type TimelineParamList = {
     selfIntro: string;
     text: string;
     timestamp: Date;
+    post_image: string | null;
   };
   AddReply: {
     post_id: string;
@@ -65,6 +66,9 @@ export type TimelineParamList = {
     user_country: string;
     user_language: string;
     selfIntro: string;
+  };
+  PostImage: {
+    post_image: string | null;
   };
 };
 
