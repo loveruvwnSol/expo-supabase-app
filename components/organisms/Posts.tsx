@@ -54,7 +54,7 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
         const data = userInfos.find((s) => s[0].id === e.id);
         if (!data) return null;
 
-        let post_image = null;
+        let post_image: string | null = null;
         if (e.post_image_id) {
           const { publicURL } = supabase.storage
             .from("post-images")
@@ -77,6 +77,7 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
                 selfIntro: data[0].selfIntro,
                 text: e.text,
                 timestamp: e.timestamp,
+                post_image: post_image,
               })
             }
           >
@@ -152,14 +153,22 @@ export const Posts: React.FC<PostsProps> = ({ navigation }) => {
                       </Box>
                       <Box justifyContent="center" alignItems="center">
                         {post_image && (
-                          <Image
-                            w={72}
-                            mt={4}
-                            h={72}
-                            source={{ uri: post_image ?? "" }}
-                            alt=""
-                            borderRadius={15}
-                          />
+                          <Link
+                            onPress={() =>
+                              navigation.navigate("PostImage", {
+                                post_image: post_image,
+                              })
+                            }
+                          >
+                            <Image
+                              w={72}
+                              mt={4}
+                              h={72}
+                              source={{ uri: post_image ?? "" }}
+                              alt=""
+                              borderRadius={15}
+                            />
+                          </Link>
                         )}
                       </Box>
                       <PostIcons
