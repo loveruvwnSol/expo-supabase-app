@@ -64,7 +64,7 @@ export const AddReplyText: React.FC<AddReplyTextProps> = ({
         <TextArea
           fontSize={16}
           variant="unstyled"
-          placeholder="今日の出来事を書こう"
+          placeholder="メッセージ"
           value={textAreaValue}
           onChangeText={(text) => setTextAreaValue(text)}
           borderWidth={0}
