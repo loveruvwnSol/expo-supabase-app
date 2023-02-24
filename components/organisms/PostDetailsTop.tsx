@@ -8,6 +8,7 @@ import {
   Divider,
   Button,
   Link,
+  Image,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -24,6 +25,7 @@ type PostDetailsTopProps = {
   selfIntro: string;
   text: string;
   timestamp: Date;
+  post_image: string | null;
 };
 
 export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
@@ -38,6 +40,7 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
   selfIntro,
   text,
   timestamp,
+  post_image,
 }) => {
   const { colorMode } = useColorMode();
 
@@ -100,6 +103,26 @@ export const PostDetailsTop: React.FC<PostDetailsTopProps> = ({
               </Text>
               <Box mt={2} ml={2} w={64}>
                 <Text fontWeight="thin">{text}</Text>
+              </Box>
+              <Box justifyContent="center" alignItems="center">
+                {post_image && (
+                  <Link
+                    onPress={() =>
+                      navigation.navigate("PostImage", {
+                        post_image: post_image,
+                      })
+                    }
+                  >
+                    <Image
+                      w={72}
+                      mt={4}
+                      h={72}
+                      source={{ uri: post_image ?? "" }}
+                      alt=""
+                      borderRadius={15}
+                    />
+                  </Link>
+                )}
               </Box>
               <Box mt={3} alignItems="flex-end">
                 <Button
