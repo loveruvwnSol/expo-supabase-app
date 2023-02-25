@@ -7,6 +7,7 @@ import {
   Avatar,
   Divider,
   Link,
+  Image,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import dayjs from "dayjs";
@@ -32,6 +33,14 @@ export const Replies: React.FC<RepliesProps> = ({ navigation, post_id }) => {
 
         const data = userInfos.find((s) => s[0].id === e.id);
         if (!data) return null;
+
+        let reply_image: string | null = null;
+        if (e.reply_image_id) {
+          const { publicURL } = supabase.storage
+            .from("post-images")
+            .getPublicUrl(data[0].id + "/" + e.reply_image_id);
+          reply_image = publicURL;
+        }
 
         return (
           <Box
@@ -99,6 +108,26 @@ export const Replies: React.FC<RepliesProps> = ({ navigation, post_id }) => {
                     </Text>
                     <Box mt={2} ml={2} w={64}>
                       <Text fontWeight="thin">{e.text}</Text>
+                    </Box>
+                    <Box justifyContent="center" alignItems="center">
+                      {reply_image && (
+                        <Link
+                          onPress={() =>
+                            navigation.navigate("PostImage", {
+                              post_image: reply_image,
+                            })
+                          }
+                        >
+                          <Image
+                            w={72}
+                            mt={4}
+                            h={72}
+                            source={{ uri: reply_image ?? "" }}
+                            alt=""
+                            borderRadius={15}
+                          />
+                        </Link>
+                      )}
                     </Box>
                   </Box>
                 </HStack>
