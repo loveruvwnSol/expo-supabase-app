@@ -33,7 +33,6 @@ export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
   const AddPostData = async () => {
     if (!textAreaValue.match(/\S/g) && image) {
       var result = nanoid();
-      console.log(result);
       supabase
         .from("timeline")
         .insert({
@@ -70,7 +69,6 @@ export const AddPostText: React.FC<AddPostText> = ({ user, onSendFinish }) => {
         });
     } else if (textAreaValue.length >= 1 && image) {
       var result = nanoid();
-      console.log(result);
       supabase
         .from("timeline")
         .insert({
