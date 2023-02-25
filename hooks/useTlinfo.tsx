@@ -16,6 +16,7 @@ export type Reply = {
   id: string;
   text: string;
   timestamp: Date;
+  reply_image_id: string;
 };
 
 type UsePostStoreType = {
@@ -75,9 +76,8 @@ export const useReply = (post_id: string) => {
   const getReplyInfo = async () => {
     const { data } = await supabase
       .from("replies")
-      .select("reply_id,post_id,id,text,timestamp")
+      .select("reply_id,post_id,id,text,timestamp,reply_image_id")
       .eq("post_id", post_id);
-    console.log({ data });
     if (data) {
       setReplies(data);
     }
